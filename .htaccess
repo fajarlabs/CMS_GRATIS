@@ -1,6 +1,7 @@
 <IfModule mod_rewrite.c>
 RewriteEngine on
 
+RewriteRule ^index\.php$ media.php?module=beranda [L]
 RewriteRule ^index\.html$ media.php?module=beranda [L]
 RewriteRule ^kontak\.html$ media.php?module=kontak [L]
 RewriteRule ^galeri\.html$ media.php?module=galeri [L]

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2016 at 04:10 PM
+-- Generation Time: Oct 09, 2016 at 07:46 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -420,21 +420,22 @@ CREATE TABLE `member` (
 CREATE TABLE `menu` (
   `id_menu` int(5) NOT NULL,
   `id_parent` int(5) NOT NULL DEFAULT '0',
-  `nama_menu` varchar(30) NOT NULL,
+  `nama_menu` varchar(100) NOT NULL,
   `link` varchar(100) NOT NULL,
-  `css` varchar(100) NOT NULL,
-  `aktif` enum('Ya','Tidak') NOT NULL DEFAULT 'Ya'
+  `aktif` enum('Ya','Tidak') NOT NULL DEFAULT 'Ya',
+  `aktif_pertama` tinyint(1) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id_menu`, `id_parent`, `nama_menu`, `link`, `css`, `aktif`) VALUES
-(44, 0, 'Kontak', 'kontak.html', '', 'Ya'),
-(43, 0, 'Galeri', 'galeri.html', '', 'Ya'),
-(42, 0, 'Profil', 'profil.html', '', 'Ya'),
-(41, 0, 'Beranda', 'index.html', 'active', 'Ya');
+INSERT INTO `menu` (`id_menu`, `id_parent`, `nama_menu`, `link`, `aktif`, `aktif_pertama`) VALUES
+(44, 0, '<i class="icon-phone"></i> Kontak', 'kontak.html', 'Ya', 0),
+(43, 0, '<i class="icon-folder-open"></i> Galeri', '#', 'Ya', 0),
+(42, 0, '<i class="icon-user"></i> Profil', 'profil.html', 'Ya', 0),
+(41, 0, '<i class="icon-home"></i> Beranda', 'index.html', 'Ya', 1),
+(46, 43, 'Taman Wisata', '#', 'Ya', 0);
 
 -- --------------------------------------------------------
 
@@ -632,7 +633,8 @@ INSERT INTO `statistik` (`ip`, `tanggal`, `hits`, `online`) VALUES
 ('127.0.0.1', '2013-01-24', 34, '1359046647'),
 ('127.0.0.1', '2013-01-25', 21, '1359051663'),
 ('::1', '2016-09-28', 35, '1475074450'),
-('::1', '2016-10-08', 7, '1475935487');
+('::1', '2016-10-08', 7, '1475935487'),
+('::1', '2016-10-09', 1, '1476032303');
 
 -- --------------------------------------------------------
 
@@ -1077,7 +1079,7 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id_menu` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 --
 -- AUTO_INCREMENT for table `modul`
 --

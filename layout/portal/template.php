@@ -96,25 +96,24 @@
 
 						<ul class="nav navbar-nav navbar-left animated wow fadeInRight" data-wow-delay=".5s">
 						<?php
-						/*
-						function get_menu($data, $parent = 0) {
-						  	static $i = 1;
-						  	$tab = str_repeat(" ", $i);
+						
+						function get_menu($data, $parent = 0, $parent_class_li = "dropdown", $sub_class_ul = "dropdown-menu", $anchor_properties= 'class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"') {
 						  	if (isset($data[$parent])) {
-							  	$html = "$tab<li>";
-							  	$i++;
+							  	$html = ""; /* buka awal list */
 							  	foreach ($data[$parent] as $v) {
 								  	$child = get_menu($data, $v->id_menu);
-								  	$html .= "$tab<li class='$v->css'>";
-								  	$html .= '<a href="'.$v->link.'">'.$v->nama_menu.'</a>';
-								  	if ($child) {
-									  	$i--;
-									  	$html .= "<ul>$child";
-									  	$html .= "$tab</ul>";
+
+								  	$temp_submenu = "";
+								  	if ($child) $temp_submenu = "<ul class=\"{$sub_class_ul}\">$child</ul>"; 
+
+								  	$aktif_pertama = $v->aktif_pertama == 1 ? "active" : "";
+								  	if(empty($temp_submenu)) 
+								  		$html .= '<li class="'.$aktif_pertama.'"><a href="'.$v->link.'">'.$v->nama_menu.'</a></li>'; /* jika tidak ada submenu */
+								  	else {
+								  		/* jika ada submenu maka tambahkan css */
+								  		$html .= '<li class="'.$parent_class_li.' '.$aktif_pertama.'"><a '.$anchor_properties.' href="'.$v->link.'">'.$v->nama_menu.'</a>'.$temp_submenu.'</li>';
 								  	}
-								  	$html .= '</li>';
 							  	}
-							  	$html .= "$tab</li>";
 							  	return $html;
 						  	} else 
 						  		return false;
@@ -126,23 +125,10 @@
 						}
 
 						$menu = get_menu($data);
-						echo "$menu";*/
-
+						echo "$menu";
 						?>
-						<li class="active"><a href="#" class=""><i class="icon-home"></i> Beranda</a></li>
-                        <li class=" dropdown">
-                            <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="icon-folder-open"></i> Galeri <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle " data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Kota Jakarta</a>
-                                </li>
-                                <li><a href="#">Monumen Nasional</a></li>
-                                <li><a href="#">Kuliner Nusantara</a></li>
-                            </ul>
-                        </li>
-                        <li class=""><a href="#" class=""><i class="icon-phone"></i> Kontak</a></li>
-                        <li class=""><a href="#" class=""><i class="icon-user"></i> Profil</a></li>
 						</ul>
+
 						<form class="navbar-form navbar-right" action="#" method="post">
 							<div class="form-group">
 								<input type="text" class="form-control" placeholder="Cari Artikel">
