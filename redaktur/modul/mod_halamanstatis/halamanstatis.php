@@ -72,14 +72,14 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))) {
 
         if (Session::get("leveluser")=='admin'){
           $arrBindParam = array();
-          $arrBindParam[] = Database::content(":posisi", $posisi, PDO::PARAM_INT);
-          $arrBindParam[] = Database::content(":batas", $batas, PDO::PARAM_INT);
+          $arrBindParam[] = Database::bind(":posisi", $posisi, PDO::PARAM_INT);
+          $arrBindParam[] = Database::bind(":batas", $batas, PDO::PARAM_INT);
           $oResult = $DB->select("SELECT * FROM halamanstatis ORDER BY id_halaman DESC LIMIT :posisi , :batas ",$arrBindParam);
         } else {
           $arrBindParam = array();
-          $arrBindParam[] = Database::content(":posisi", $posisi, PDO::PARAM_INT);
-          $arrBindParam[] = Database::content(":batas", $batas, PDO::PARAM_INT);
-          $arrBindParam[] = Database::content(":username", Session::get("username"), PDO::PARAM_STR);
+          $arrBindParam[] = Database::bind(":posisi", $posisi, PDO::PARAM_INT);
+          $arrBindParam[] = Database::bind(":batas", $batas, PDO::PARAM_INT);
+          $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
           $oResult = $DB->select("SELECT * FROM halamanstatis WHERE username = :username ORDER BY id_halaman DESC LIMIT :posisi , :batas ", $arrBindParam);
         }
       
@@ -121,7 +121,7 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))) {
           $jmldata = $DB->select("SELECT * FROM halamanstatis")->num_rows;
         else{
           $arrBindParam = array();
-          $arrBindParam[] = Database::content(":username", Session::get("username"), PDO::PARAM_STR);
+          $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
           $jmldata = $DB->select("SELECT * FROM halamanstatis WHERE username = :username ",$arrBindParam)->num_rows;
         }  
         break;    
@@ -138,16 +138,16 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))) {
 
       if (Session::get("leveluser")=='admin'){
         $arrBindParam = array();
-        $arrBindParam[] = Database::content(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
-        $arrBindParam[] = Database::content(":posisi", $posisi, PDO::PARAM_INT);
-        $arrBindParam[] = Database::content(":batas", $batas, PDO::PARAM_INT);
+        $arrBindParam[] = Database::bind(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":posisi", $posisi, PDO::PARAM_INT);
+        $arrBindParam[] = Database::bind(":batas", $batas, PDO::PARAM_INT);
         $oResult = $DB->select("SELECT * FROM halamanstatis WHERE judul LIKE :kata ORDER BY id_halaman DESC LIMIT :posisi , :batas ",$arrBindParam);
       } else {
         $arrBindParam = array();
-        $arrBindParam[] = Database::content(":username", Session::get("username"), PDO::PARAM_STR);
-        $arrBindParam[] = Database::content(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
-        $arrBindParam[] = Database::content(":posisi", $posisi, PDO::PARAM_INT);
-        $arrBindParam[] = Database::content(":batas", $batas, PDO::PARAM_INT);
+        $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":posisi", $posisi, PDO::PARAM_INT);
+        $arrBindParam[] = Database::bind(":batas", $batas, PDO::PARAM_INT);
         $oResult = $DB->select("SELECT * FROM halamanstatis WHERE username = :username AND judul LIKE :kata ORDER BY id_halaman DESC LIMIT :posisi , :batas",$arrBindParam);
       }
   
@@ -177,12 +177,12 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))) {
 
       if (Session::get("leveluser")=='admin'){
         $arrBindParam = array();
-        $arrBindParam[] = Database::content(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
         $jmldata = Database::select("SELECT * FROM halamanstatis WHERE judul LIKE :kata ")->num_rows;
       } else {
         $arrBindParam = array();
-        $arrBindParam[] = Database::content(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
-        $arrBindParam[] = Database::content(":username", Session::get("username"), PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":kata", "%".Gets::get("kata")."%", PDO::PARAM_STR);
+        $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
         $jmldata = Database::select("SELECT * FROM halamanstatis WHERE username = :username AND judul LIKE :kata ")->num_rows;
       }  
       break;    
@@ -231,8 +231,8 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))) {
    break;
    case "edithalamanstatis":
      $arrBindParam = array();
-     $arrBindParam[] = Database::content(":id", Gets::get("id"), PDO::PARAM_INT);
-     $arrBindParam[] = Database::content(":username", Session::get("username"), PDO::PARAM_STR);
+     $arrBindParam[] = Database::bind(":id", Gets::get("id"), PDO::PARAM_INT);
+     $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
      $oResult = $DB->select("SELECT * FROM halamanstatis WHERE id_halaman = :id AND username = :username",$arrBindParam);
      if($oResult->num_rows > 0) {
        echo "

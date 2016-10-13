@@ -71,44 +71,53 @@ echo "";
     $p      = new Paging;
     $batas  = 15;
     $posisi = $p->cariPosisi($batas);
+    $oResult = null;
 
    if (Session::get("leveluser")=='admin'){
-      $tampil = mysql_query("SELECT * FROM users ORDER BY id_session DESC LIMIT $posisi,$batas");
+      $query = "SELECT * FROM users ORDER BY id_session DESC LIMIT :posisi , :batas";
+      $arrBindParam = array();
+      $arrBindParam[] = Database::bind(":posisi", $posisi, PDO::PARAM_INT);
+      $arrBindParam[] = Database::bind(":batas", $batas, PDO::PARAM_INT);
+      $oResult = $DB->select($query,$arrBindParam);
     } else{
-      $tampil=mysql_query("SELECT * FROM users WHERE username='$_SESSION[namauser]'");
+      $query = "SELECT * FROM users WHERE username = :username ";
+      $arrBindParam = array();
+      $arrBindParam[] = Database::bind(":username", Session::get("username"), PDO::PARAM_STR);
+      $oResult = $DB->select($query,$arrBindParam);
     }
-  
-    $no = $posisi+1;
-    while($r=mysql_fetch_array($tampil)){
-    $lebar=strlen($no);
-    switch($lebar){
-      case 1:
-      {
-        $g="0".$no;
-        break;     
+
+    if($oResult != null) {
+      if($oResult->num_rows > 0) {
+          $no = $posisi+1;
+          foreach($oResult->result as $key => $val) {
+            $lebar=strlen($no);
+            switch($lebar){
+              case 1:
+                $g="0".$no;
+                break;     
+              case 2:
+                $g=$no;
+                break;     
+            } 
+          
+           echo "<tr class=gradeX> 
+           
+           <td width=50><center>$g</center></td>
+           <td>".$val->username."</td>
+           <td>".$val->nama_lengkap."</td>
+           <td><a href=mailto:".$val->email.">".$val->email."</a></td>
+           <td><center><img src='../foto_user/small_".$val->foto."' width=50></center></td>
+           <td align=center><center>".$val->blokir."</center></td>
+           
+           <td valign=middle><a href=?module=user&act=edituser&id=".$val->id_session." rel=tooltip-top title='Edit' class='with-tip'>
+           <center><img src='img/edit.png'></center></a> 
+           
+           </td> </tr> ";
+          
+            $no++; 
+        }
       }
-      case 2:
-      {
-        $g=$no;
-        break;     
-      }      
-    } 
-	
-   echo "<tr class=gradeX> 
-   
-   <td width=50><center>$g</center></td>
-   <td>$r[username]</td>
-   <td>$r[nama_lengkap]</td>
-   <td><a href=mailto:$r[email]>$r[email]</a></td>
-   <td><center><img src='../foto_user/small_$r[foto]' width=50></center></td>
-   <td align=center><center>$r[blokir]</center></td>
-   
-   <td valign=middle><a href=?module=user&act=edituser&id=$r[id_session] rel=tooltip-top title='Edit' class='with-tip'>
-   <center><img src='img/edit.png'></center></a> 
-   
-   </td> </tr> ";
-  
-    $no++; }
+    }
 	
    echo "</tbody></table> ";
 
@@ -165,12 +174,13 @@ echo "";
 
    echo "<h3>PILIH HAK AKSES MODUL: </h3>";
 	  
-   $qrMod = mysql_query("SELECT * FROM modul WHERE publish='Y' AND status='user'");
+   $query = "SELECT * FROM modul WHERE publish='Y' AND status='user'";
+   $oResult = $DB->select($query);
 	 
-   while($mod=mysql_fetch_array($qrMod)){
-   echo "<label><input name='modul[]' type='checkbox' value='$mod[id_modul]' /> 
-   <span class style=\"color:#000;\">$mod[nama_modul]</span></label> ";}
-
+   foreach($oResult->result as $key => $val) {
+       echo "<label><input name='modul[]' type='checkbox' value='".$val->id_modul."' />
+       <span class style=\"color:#000;\">".$val->nama_modul."</span></label> ";
+   }
 
     echo "<br/><br/><div class=block-actions> 
     <ul class=actions-right> 
@@ -180,10 +190,10 @@ echo "";
     <ul class=actions-left> 
     <li>
    <input type='submit' name='upload' class='button' value=' &nbsp;&nbsp;&nbsp;&nbsp; Simpan &nbsp;&nbsp;&nbsp;&nbsp;'>
-   </form>"; }
-	  
-	 
-    else{
+   </form>"; 
+
+ } else {
+
    echo "
    <div id='main-content'>
    <div class='container_12'>
@@ -193,16 +203,28 @@ echo "";
 
    <div class='block-header'>
    <h1>Anda tidak berhak mengakses halaman ini !</h1>
-   </div>";  }
+   </div>";  
+ }
 	 
    break;
     
    case "edituser":
-   $edit=mysql_query("SELECT * FROM users WHERE id_session='$_GET[id]'");
-   $r=mysql_fetch_array($edit);
+   $query = "SELECT * FROM users WHERE id_session = :id ";
+   $arrBindParam = array();
+   $arrBindParam[] = Database::bind(":id", Gets::get("id"), PDO::PARAM_INT);
+   $oResult = $DB->select($query,$arrBindParam);
+
+   /* filter */
+   $id_session = isset($oResult->result[0]->id_session) ? $oResult->result[0]->id_session : "";
+   $blokir = isset($oResult->result[0]->blokir) ? $oResult->result[0]->blokir : "";
+   $username = isset($oResult->result[0]->username) ? $oResult->result[0]->username : "";
+   $nama_lengkap = isset($oResult->result[0]->nama_lengkap) ? $oResult->result[0]->nama_lengkap : "";
+   $email = isset($oResult->result[0]->email) ? $oResult->result[0]->email : "";
+   $no_telp = isset($oResult->result[0]->no_telp) ? $oResult->result[0]->no_telp : "";
+   $foto = isset($oResult->result[0]->foto) ? $oResult->result[0]->foto : "";
+
    if(Session::get("leveluser")=='admin'){
 	
-		  
    echo "
    <div id='main-content'>
    <div class='container_12'>
@@ -216,12 +238,12 @@ echo "";
    <div class='block-content'>
      
    <form method=POST action='$aksi?module=user&act=update' enctype='multipart/form-data'>
-   <input type=hidden name=id value=$r[id_session]>
-   <input type=hidden name=blokir value='$r[blokir]'>
+   <input type=hidden name=id value='$id_session'>
+   <input type=hidden name=blokir value='$blokir'>
 	  
    <p class=inline-small-label> 
    <label for=field4>Username</label>
-   <input type=text name='username' value='$r[username]' disabled>
+   <input type=text name='username' value='$username' disabled>
    </p> 
    
    <p class=inline-small-label> 
@@ -231,22 +253,22 @@ echo "";
    
    <p class=inline-small-label> 
    <label for=field4>Nama Lengkap</label>
-   <input type=text name='nama_lengkap' size=30  value='$r[nama_lengkap]'>
+   <input type=text name='nama_lengkap' size=30  value='$nama_lengkap'>
    </p> 
 	 
    <p class=inline-small-label> 
    <label for=field4>E-mail</label>
-   <input type=text name='email' size=30 value='$r[email]'>
+   <input type=text name='email' size=30 value='$email'>
    </p> 
 	 
    <p class=inline-small-label> 
    <label for=field4>No.Telp/HP</label>
-   <input type=text name='no_telp' size=30 value='$r[no_telp]'>
+   <input type=text name='no_telp' size=30 value='$no_telp'>
    </p> 
    
    <p class=inline-small-label> 
    <label for=field4>Foto</label>
-   <img src='../foto_user/small_$r[foto]' width=100>
+   <img src='../foto_user/small_$foto' width=100>
    </p>   
     
    <p class=inline-small-label> 
@@ -255,37 +277,36 @@ echo "";
    </p><br/>";
 		  
 	
-    if ($r[blokir]=='N'){
+    if ($blokir=='N'){
       echo "<tr><td>Blokir</td>     <td> : <input type=radio name='blokir' value='Y'> Ya   
                                            <input type=radio name='blokir' value='N' checked> Tidak </td></tr>";}
     else{
       echo "<tr><td>Blokir</td>     <td> : <input type=radio name='blokir' value='Y' checked> Ya  
                                            <input type=radio name='blokir' value='N'> Tidak </td></tr>";}
 										  
-	
-	$qrMod1 = mysql_query("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul 
-	AND users_modul.id_session='$_GET[id]'");
+	$query = "SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session = :id";
+  $arrBindParam = array();
+  $arrBindParam[] = Database::bind(":id", Gets::get("id"), PDO::PARAM_INT);
+  $oResult = $DB->select($query,$arrBindParam);
 	
 	echo "<br/><br/><tr><td><b>Hak Akses</b></td><td> :";
-	while($mod1=mysql_fetch_array($qrMod1)){
-	
-	echo " ( $mod1[nama_modul] -  
-	<a href=javascript:confirmdelete('$aksi?module=user&act=hapusmodule&id=$mod1[id_umod]&sessid=$_GET[id]')>
-	 <img src='img/icn_trash.png' title='Hapus'></a>)";}
+	foreach($oResult->result as $key => $val){
+  	echo " ( ".$val->nama_modul." - <a href=javascript:confirmdelete('$aksi?module=user&act=hapusmodule&id=".$val->id_umod."&sessid=".Session::get("sessid")."')>
+  	 <img src='img/icn_trash.png' title='Hapus'></a>)";
+  }
 
-
-	 
 	echo "</td></tr>";
-	
-    $qrMod = mysql_query("SELECT * FROM modul WHERE publish='Y' AND status='user'");
+	$query = "SELECT * FROM modul WHERE publish='Y' AND status='user'";
+  $oResult = $DB->select($query);
 	echo "<br/><br/><tr><td valign=top><b>Tambah Modul</b></td><td> : ";
 	
-	while($mod=mysql_fetch_array($qrMod)){
-	echo "<label><input name='modul[]' type='checkbox' value='$mod[id_modul]' />$mod[nama_modul]</label> ";}
+	foreach($oResult->result as $key => $val) {
+	   echo "<label><input name='modul[]' type='checkbox' value='".$val->id_modul."' />".$val->nama_modul."</label> ";
+  }
 	
 	echo "</td></tr>";
     
-    echo "<br/><br/><div class=block-actions> 
+  echo "<br/><br/><div class=block-actions> 
     <ul class=actions-right> 
     <li>
     <a class='button red' id=reset-validate-form href='?module=user'>Batal</a>
@@ -293,12 +314,8 @@ echo "";
     <ul class=actions-left> 
     <li>
     <input type='submit' name='upload' class='button' value=' &nbsp;&nbsp;&nbsp;&nbsp; Simpan &nbsp;&nbsp;&nbsp;&nbsp;'>
-	</form>";}
-	
-	
-   else {
-   
-  		  
+	</form>";
+} else {		  
    echo "
    <div id='main-content'>
    <div class='container_12'>
@@ -312,12 +329,12 @@ echo "";
    <div class='block-content'>
      
    <form method=POST action='$aksi?module=user&act=update' enctype='multipart/form-data'>
-   <input type=hidden name=id value=$r[id_session]>
-   <input type=hidden name=blokir value='$r[blokir]'>
+   <input type=hidden name=id value='$id_session'>
+   <input type=hidden name=blokir value='$blokir'>
 	  
    <p class=inline-small-label> 
    <label for=field4>Username</label>
-   <input type=text name='username' value='$r[username]' disabled>
+   <input type=text name='username' value='$username' disabled>
    </p> 
    
    <p class=inline-small-label> 
@@ -327,22 +344,22 @@ echo "";
    
    <p class=inline-small-label> 
    <label for=field4>Nama Lengkap</label>
-   <input type=text name='nama_lengkap' size=30  value='$r[nama_lengkap]'>
+   <input type=text name='nama_lengkap' size=30  value='$nama_lengkap'>
    </p> 
 	 
    <p class=inline-small-label> 
    <label for=field4>E-mail</label>
-   <input type=text name='email' size=30 value='$r[email]'>
+   <input type=text name='email' size=30 value='$email'>
    </p> 
 	 
    <p class=inline-small-label> 
    <label for=field4>No.Telp/HP</label>
-   <input type=text name='no_telp' size=30 value='$r[no_telp]'>
+   <input type=text name='no_telp' size=30 value='$no_telp'>
    </p> 
    
    <p class=inline-small-label> 
    <label for=field4>Foto</label>
-   <img src='../foto_user/small_$r[foto]' width=100>
+   <img src='../foto_user/small_$foto' width=100>
    </p>   
     
    <p class=inline-small-label> 

@@ -11,9 +11,9 @@ if (!ctype_alnum($username) OR !ctype_alnum($pass))
   echo "Sekarang loginnya tidak bisa di injeksi lho.";
 else {
   $arrBindParam = array();
-  $arrBindParam[] = $DB::content(":username",$username,PDO::PARAM_STR);
-  $arrBindParam[] = $DB::content(":password",$pass,PDO::PARAM_STR);
-  $arrBindParam[] = $DB::content(":blokir","N",PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":username",$username,PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":password",$pass,PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":blokir","N",PDO::PARAM_STR);
   $oResult = $DB->select("SELECT * FROM users WHERE username = :username AND password = :password AND blokir = :blokir", $arrBindParam);
 
   if ($oResult->num_rows > 0) {

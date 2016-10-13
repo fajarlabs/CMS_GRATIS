@@ -6,8 +6,8 @@ function user_akses($mod,$id){
   global $DB;
 	$link = "?module=".$mod;
   $arrBindParam = array();
-  $arrBindParam[] = Database::content(":id", $id, PDO::PARAM_INT);
-  $arrBindParam[] = Database::content(":link", $link, PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":id", $id, PDO::PARAM_INT);
+  $arrBindParam[] = Database::bind(":link", $link, PDO::PARAM_STR);
   $oResult = $DB->select("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session= :id AND modul.link = :link ", $arrBindParam);
 	return $oResult->num_rows;
 }
@@ -15,8 +15,8 @@ function user_akses($mod,$id){
 function umenu_akses($link,$id){
   global $DB;
   $arrBindParam = array();
-  $arrBindParam[] = Database::content(":id", $id, PDO::PARAM_INT);
-  $arrBindParam[] = Database::content(":link", $link, PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":id", $id, PDO::PARAM_INT);
+  $arrBindParam[] = Database::bind(":link", $link, PDO::PARAM_STR);
   $oResult = $DB->select("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session= :id AND modul.link = :link ", $arrBindParam);
   return $oResult->num_rows;
 }
@@ -195,7 +195,7 @@ if (empty(Session::get("username")) AND empty(Session::get("passuser"))){
   
   <?php
   $arrBindParam = array();
-  $arrBindParam[] = Database::content(":dibaca", "N", PDO::PARAM_STR);
+  $arrBindParam[] = Database::bind(":dibaca", "N", PDO::PARAM_STR);
   $oResult = $DB->select("SELECT * FROM hubungi WHERE dibaca = :dibaca", $arrBindParam);
   echo "<span class=messages> <a href='?module=hubungi'>
   <img src='img/icons/packs/fugue/16x16/mail.png' alt='Pesan'>  <span class style=\"color:#66CCFF;\"><b>".$oResult->num_rows."</b></span>

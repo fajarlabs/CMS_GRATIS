@@ -61,7 +61,7 @@ class Database {
 		$sth->execute();
 	}
 
-	public static function content($key, $val, $type_param) {
+	public static function bind($key, $val, $type_param) {
 		$o = new stdClass();
 		$o->key = $key;
 		$o->val = $val;
