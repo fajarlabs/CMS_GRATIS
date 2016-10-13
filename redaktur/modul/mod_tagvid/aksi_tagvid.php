@@ -6,7 +6,6 @@ session_start();
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
 else{
-include "../../../config/koneksi.php";
 include "../../../config/fungsi_seo.php";
 
 $module=$_GET[module];

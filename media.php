@@ -4,8 +4,7 @@
     else
         ob_start();
   session_start();
-  // Panggil semua fungsi yang dibutuhkan (semuanya ada di folder config)
-  include "config/koneksi.php";
+  
 	include "config/fungsi_indotgl.php";
 	include "config/class_paging.php";
 	include "config/fungsi_combobox.php";

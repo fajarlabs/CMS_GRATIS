@@ -1,6 +1,5 @@
 <?php
 session_start();
-include "config/koneksi.php";
 include "config/library.php";
 
 $nama=trim($_POST['nama_komentar']);

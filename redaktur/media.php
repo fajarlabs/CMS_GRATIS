@@ -1,53 +1,55 @@
 <?php
-session_start();
-error_reporting(0);
+include "../config/importAll.php";
+Session::start();
 
-//fungsi cek akses user
 function user_akses($mod,$id){
+  global $DB;
 	$link = "?module=".$mod;
-	$cek = mysql_num_rows(mysql_query("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session='$id' AND modul.link='$link'"));
-	return $cek;
+  $arrBindParam = array();
+  $arrBindParam[] = Database::content(":id", $id, PDO::PARAM_INT);
+  $arrBindParam[] = Database::content(":link", $link, PDO::PARAM_STR);
+  $oResult = $DB->select("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session= :id AND modul.link = :link ", $arrBindParam);
+	return $oResult->num_rows;
 }
-//fungsi cek akses menu
+
 function umenu_akses($link,$id){
-	$cek = mysql_num_rows(mysql_query("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session='$id' AND modul.link='$link'"));
-	return $cek;
+  global $DB;
+  $arrBindParam = array();
+  $arrBindParam[] = Database::content(":id", $id, PDO::PARAM_INT);
+  $arrBindParam[] = Database::content(":link", $link, PDO::PARAM_STR);
+  $oResult = $DB->select("SELECT * FROM modul,users_modul WHERE modul.id_modul=users_modul.id_modul AND users_modul.id_session= :id AND modul.link = :link ", $arrBindParam);
+  return $oResult->num_rows;
 }
-//fungsi redirect
+
 function akses_salah(){
-	$pesan = "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Maaf Anda tidak berhak mengakses halaman ini</center>";
+	$pesan = "<link href='style.css' rel='stylesheet' type='text/css'><center>Maaf Anda tidak berhak mengakses halaman ini</center>";
  	$pesan.= "<meta http-equiv='refresh' content='2;url=media.php?module=home'>";
 	return $pesan;
 }
 
-/* fungsi cek menu */
 function cekMenu($array = array()){
     $i = 0;
-    $i += ($_SESSION[leveluser]=="admin" ? 1 : 0);
+    $i += (Session::get("leveluser") =="admin" ? 1 : 0);
     foreach($array as $key => $val) 
-      $i += umenu_akses("?module={$val}",$_SESSION[sessid]);
+      $i += umenu_akses("?module={$val}",Session::get('sessid'));
     return $i;
 }
 
-if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
 
-  echo "
-  <link href='css/zalstyle.css' rel='stylesheet' type='text/css'>";
+if (empty(Session::get("username")) AND empty(Session::get("passuser"))){
 
-  echo "
-  </head>
+  echo "<link href='css/zalstyle.css' rel='stylesheet' type='text/css'>";
+
+  echo "</head>
   <body class='special-page'>
   <div id='container'>
+
   <section id='error-number'>
-  
   <img src='img/lock.png'>
   <h1>AKSES ILEGAL</h1>
-  
   <p><span class style=\"font-size:14px; color:#ccc;\">
   Maaf, untuk masuk Halaman Administrator
   anda harus Login dahulu!</p></span><br/>
-  
   </section>
   
   <section id='error-text'>
@@ -55,8 +57,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
   </section>
   </div>";
   
-}
-else{
+} else {
 ?>
 
   <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -77,56 +78,55 @@ else{
 	<link href="http://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet" type="text/css" />
 	<script src="js/libs/modernizr-2.0.6.min.js"></script> 
 	
-	 <script language="javascript" type="text/javascript"
-src="editor/tiny_mce_src.js"></script>
-<script type="text/javascript">
-tinyMCE.init({
-		mode : "textareas",
-		theme : "advanced",
-		plugins : "table,youtube,advhr,advimage,advlink,emotions,flash,searchreplace,paste,directionality,noneditable,contextmenu",
-		theme_advanced_buttons1_add : "fontselect,fontsizeselect",
-		theme_advanced_buttons2_add : "separator,preview,zoom,separator,forecolor,backcolor,liststyle",
-		theme_advanced_buttons2_add_before: "cut,copy,paste,separator,search,replace,separator",
-		theme_advanced_buttons3_add_before : "tablecontrols,separator,youtube,separator",
-		theme_advanced_buttons3_add : "emotions,flash",
-		theme_advanced_toolbar_location : "top",
-		theme_advanced_toolbar_align : "left",
-		theme_advanced_statusbar_location : "bottom",
-		extended_valid_elements : "hr[class|width|size|noshade]",
-		file_browser_callback : "fileBrowserCallBack",
-		paste_use_dialog : false,
-		theme_advanced_resizing : true,
-		theme_advanced_resize_horizontal : false,
-		theme_advanced_link_targets : "_something=My somthing;_something2=My somthing2;_something3=My somthing3;",
-		apply_source_formatting : true
-});
+	<script language="javascript" type="text/javascript" src="editor/tiny_mce_src.js"></script>
+  <script type="text/javascript">
+    tinyMCE.init({
+    		mode : "textareas",
+    		theme : "advanced",
+    		plugins : "table,youtube,advhr,advimage,advlink,emotions,flash,searchreplace,paste,directionality,noneditable,contextmenu",
+    		theme_advanced_buttons1_add : "fontselect,fontsizeselect",
+    		theme_advanced_buttons2_add : "separator,preview,zoom,separator,forecolor,backcolor,liststyle",
+    		theme_advanced_buttons2_add_before: "cut,copy,paste,separator,search,replace,separator",
+    		theme_advanced_buttons3_add_before : "tablecontrols,separator,youtube,separator",
+    		theme_advanced_buttons3_add : "emotions,flash",
+    		theme_advanced_toolbar_location : "top",
+    		theme_advanced_toolbar_align : "left",
+    		theme_advanced_statusbar_location : "bottom",
+    		extended_valid_elements : "hr[class|width|size|noshade]",
+    		file_browser_callback : "fileBrowserCallBack",
+    		paste_use_dialog : false,
+    		theme_advanced_resizing : true,
+    		theme_advanced_resize_horizontal : false,
+    		theme_advanced_link_targets : "_something=My somthing;_something2=My somthing2;_something3=My somthing3;",
+    		apply_source_formatting : true
+    });
 
-	function fileBrowserCallBack(field_name, url, type, win) {
-		var connector = "../../filemanager/browser.html?Connector=connectors/php/connector.php";
-		var enableAutoTypeSelection = true;
-		
-		var cType;
-		tinymcpuk_field = field_name;
-		tinymcpuk = win;
-		
-		switch (type) {
-			case "image":
-				cType = "Image";
-				break;
-			case "flash":
-				cType = "Flash";
-				break;
-			case "file":
-				cType = "File";
-				break;
-		}
-		
-		if (enableAutoTypeSelection && cType) {
-			connector += "&Type=" + cType;
-		}
-		
-		window.open(connector, "tinymcpuk", "modal,width=600,height=400");
-	}
+  	function fileBrowserCallBack(field_name, url, type, win) {
+  		var connector = "../../filemanager/browser.html?Connector=connectors/php/connector.php";
+  		var enableAutoTypeSelection = true;
+  		
+  		var cType;
+  		tinymcpuk_field = field_name;
+  		tinymcpuk = win;
+  		
+  		switch (type) {
+  			case "image":
+  				cType = "Image";
+  				break;
+  			case "flash":
+  				cType = "Flash";
+  				break;
+  			case "file":
+  				cType = "File";
+  				break;
+  		}
+  		
+  		if (enableAutoTypeSelection && cType) {
+  			connector += "&Type=" + cType;
+  		}
+  		
+  		window.open(connector, "tinymcpuk", "modal,width=600,height=400");
+  	}
 </script>
 	<script type="text/javascript">
 	$(document).ready(function() 
@@ -161,9 +161,7 @@ tinyMCE.init({
     });
 </script>
 	
-	
-	
-	
+
   </head>
   <body id="top">
   <div id="container">
@@ -196,10 +194,11 @@ tinyMCE.init({
   <h3><?php include "nama.php"; ?></h3>
   
   <?php
-  $jumHub=mysql_num_rows(mysql_query("SELECT * FROM hubungi WHERE dibaca='N'"));
-  echo "
-  <span class=messages> <a href='?module=hubungi'>
-  <img src='img/icons/packs/fugue/16x16/mail.png' alt='Pesan'>  <span class style=\"color:#66CCFF;\"><b>$jumHub</b></span>
+  $arrBindParam = array();
+  $arrBindParam[] = Database::content(":dibaca", "N", PDO::PARAM_STR);
+  $oResult = $DB->select("SELECT * FROM hubungi WHERE dibaca = :dibaca", $arrBindParam);
+  echo "<span class=messages> <a href='?module=hubungi'>
+  <img src='img/icons/packs/fugue/16x16/mail.png' alt='Pesan'>  <span class style=\"color:#66CCFF;\"><b>".$oResult->num_rows."</b></span>
   <span class style=\"font-size:11px; color:#fff;\"> belum dibaca</span></a> </span>";
   ?>
   
@@ -209,22 +208,48 @@ tinyMCE.init({
 			
   <nav id="nav">
   <ul class="menu collapsible shadow-bottom">
-	
+
   <li>
   <?php if((cekMenu(array("identitas","menu","halamanstatis")) > 0)) { ?>
-  <a href="javascript:void(0);">MENU UTAMA</a> 
+  <a href="javascript:void(0);">MODUL ARTIKEL</a> 
   <ul class="sub">
-  <?php include "menu1.php"; ?>
+  <?php include "menu_artikel.php"; ?>
   </ul>
   <?php } ?>
   </li>
 
   <li>
-  <?php if((cekMenu(array("berita","kategori","tag","komentar","katajelek","album","galerifoto")) > 0)) { ?>
-  <a href="javascript:void(0);">
-   MODUL BERITA</a> 
+  <?php if((cekMenu(array("galeri","kategori_galeri")) > 0)) { ?>
+  <a href="javascript:void(0);">MODUL GALERI</a> 
   <ul class="sub">
-  <?php include "menu2.php"; ?>
+  <?php include "menu_galeri.php"; ?>
+  </ul>
+  <?php } ?>
+  </li>
+
+  <li>
+  <?php if((cekMenu(array("halaman_statis")) > 0)) { ?>
+  <a href="javascript:void(0);">MODUL HALAMAN</a> 
+  <ul class="sub">
+  <?php include "menu_halaman.php"; ?>
+  </ul>
+  <?php } ?>
+  </li>
+
+  <li>
+  <?php if((cekMenu(array("kontak_kami")) > 0)) { ?>
+  <a href="javascript:void(0);">MODUL KONTAK KAMI</a> 
+  <ul class="sub">
+  <?php include "menu_kontak_kami.php"; ?>
+  </ul>
+  <?php } ?>
+  </li>
+
+  <li>
+  <?php if((cekMenu(array("setting")) > 0)) { ?>
+  <a href="javascript:void(0);">MODUL SETTING</a> 
+  <ul class="sub">
+  <?php include "menu_setting.php"; ?>
   </ul>
   <?php } ?>
   </li>
@@ -234,27 +259,7 @@ tinyMCE.init({
   <a href="javascript:void(0);">
    MODUL VIDEO</a> 
   <ul class="sub">
-  <?php include "menu3.php"; ?>
-  </ul>
-  <?php } ?>
-  </li>
-
-  <li>
-  <?php if((cekMenu(array("iklanatas","iklantengah","pasangiklan")) > 0)) { ?>
-  <a href="javascript:void(0);">
-   MODUL IKLAN</a> 
-  <ul class="sub">
-  <?php include "menu4.php"; ?>
-  </ul>
-  <?php } ?>
-  </li>
-
-  <li>
-  <?php if((cekMenu(array("logo","templates","background","agenda","poling","hubungi")) > 0)) { ?>
-  <a href="javascript:void(0);">
-   MODUL WEB</a> 
-  <ul class="sub">
-  <?php include "menu5.php"; ?>
+  <?php include "menu_video.php"; ?>
   </ul>
   <?php } ?>
   </li>
@@ -262,9 +267,9 @@ tinyMCE.init({
   <li>
   <?php if((cekMenu(array("user","modul")) > 0)) { ?>
   <a href="javascript:void(0);">
-   MODUL USER</a> 
+   MODUL MANAJEMEN</a> 
   <ul class="sub">
-  <?php include "menu6.php"; ?>
+  <?php include "menu_manajemen.php"; ?>
   </ul>
   <?php } ?>
   </li>
@@ -288,8 +293,6 @@ tinyMCE.init({
   <script>window.jQuery||document.write('<script src="js/libs/jquery-1.6.2.min.js"><\/script>');</script>
  
   <script defer type="text/javascript" src="js/zal.js"></script>
-
- 
 
   </body></html>
 

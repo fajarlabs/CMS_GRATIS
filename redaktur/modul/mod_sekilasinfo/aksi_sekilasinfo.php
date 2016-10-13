@@ -18,8 +18,6 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
   </div>";}
   
 else{
-
-include "../../../config/koneksi.php";
 include "../../../config/library.php";
 include "../../../config/fungsi_thumb.php";
 

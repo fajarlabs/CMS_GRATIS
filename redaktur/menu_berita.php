@@ -1,5 +1,4 @@
 <?php
-include "../config/koneksi.php";
 
 $cek=umenu_akses("?module=berita",$_SESSION[sessid]);
 if($cek==1 OR $_SESSION[leveluser]=='admin'){

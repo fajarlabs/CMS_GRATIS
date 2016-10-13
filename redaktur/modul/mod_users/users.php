@@ -8,7 +8,6 @@ function confirmdelete(delUrl) {
 
 
 <?php    
-session_start();
 //Deteksi hanya bisa diinclude, tidak bisa langsung dibuka (direct open)
 if(count(get_included_files())==1)
 {
@@ -23,12 +22,12 @@ if(count(get_included_files())==1)
 else{
 
 //cek hak akses user
-$cek=user_akses($_GET[module],$_SESSION[sessid]);
-if($cek==1 OR $_SESSION[leveluser]=='admin'){
+$cek=user_akses(Gets::get("module"),Session::get("sessid"));
+if($cek==1 OR Session::get("leveluser") =='admin'){
 
 
 $aksi="modul/mod_users/aksi_users.php";
-switch($_GET[act]){
+switch(Gets::get("act")){
   // Tampil User
   default:
 echo "";
@@ -73,10 +72,9 @@ echo "";
     $batas  = 15;
     $posisi = $p->cariPosisi($batas);
 
-   if ($_SESSION[leveluser]=='admin'){
+   if (Session::get("leveluser")=='admin'){
       $tampil = mysql_query("SELECT * FROM users ORDER BY id_session DESC LIMIT $posisi,$batas");
-    }
-    else{
+    } else{
       $tampil=mysql_query("SELECT * FROM users WHERE username='$_SESSION[namauser]'");
     }
   
@@ -119,7 +117,7 @@ echo "";
   
   
    case "tambahuser":
-   if ($_SESSION[leveluser]=='admin'){
+   if (Session::get("leveluser")=='admin'){
    echo "
    <div id='main-content'>
    <div class='container_12'>
@@ -202,7 +200,7 @@ echo "";
    case "edituser":
    $edit=mysql_query("SELECT * FROM users WHERE id_session='$_GET[id]'");
    $r=mysql_fetch_array($edit);
-   if($_SESSION[leveluser]=='admin'){
+   if(Session::get("leveluser")=='admin'){
 	
 		  
    echo "

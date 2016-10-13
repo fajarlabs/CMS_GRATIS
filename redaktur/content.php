@@ -1,14 +1,13 @@
    
    <?php
-   include "../config/koneksi.php";
    include "../config/library.php";
    include "../config/fungsi_indotgl.php";
    include "../config/fungsi_combobox.php";
    include "../config/class_paging.php";
 
    // Bagian Home
-   if ($_GET['module']=='home'){
-   if ($_SESSION['leveluser']=='admin'){
+   if (Gets::get("module") =='home'){
+   if (Session::get("leveluser") =='admin'){
    echo "
   
    <div id='main-content'>
@@ -147,222 +146,246 @@
  }
 }
 
+/* Bagian artikel */
+elseif (Gets::get("module")=='artikel'){
+  if (Session::get("leveluser") =='admin'){
+    include "modul/mod_artikel/artikel.php";
+  }
+}
+
+/* Bagian kategori artikel */
+elseif (Gets::get("module")=='kategori_artikel'){
+  if (Session::get("leveluser") =='admin'){
+    include "modul/mod_kategori_artikel/kategori_artikel.php";
+  }
+}
+
+/* Bagian galeri */
+elseif (Gets::get("module")=='galeri'){
+  if (Session::get("leveluser") =='admin'){
+    include "modul/mod_galeri/galeri.php";
+  }
+}
+
+/* Bagian kategori galeri */
+elseif (Gets::get("module")=='kategori_galeri'){
+  if (Session::get("leveluser") =='admin'){
+    include "modul/mod_kategori_galeri/kategori_galeri.php";
+  }
+}
 
 // Bagian Option
-elseif ($_GET[module]=='option'){
-  if ($_SESSION['leveluser']=='admin'){
+elseif (Gets::get("module")=='option'){
+  if (Session::get("leveluser") =='admin'){
     include "modul/mod_option/option.php";
   }
 }
 
 // (BARU) Bagian Header
-elseif ($_GET[module]=='header'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module")=='header'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_header/header.php";
   }
 }
 // Bagian Pasang Iklan
-elseif ($_GET['module']=='pasangiklan'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='pasangiklan'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_pasangiklan/pasangiklan.php";
   }
 }
 
 // Bagian Pasang Iklan
-elseif ($_GET['module']=='iklantengah'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='iklantengah'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_iklantengah/iklantengah.php";
   }
 }
 
-
 // Bagian Pasang Iklan
-elseif ($_GET['module']=='iklanatas'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='iklanatas'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_iklanatas/iklanatas.php";
   }
 }
 
-
-
 // Bagian User
-elseif ($_GET['module']=='profil'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='profil'){
+    if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_profil/profil.php";
   }
 }
 
 // Bagian Testimoni
-elseif ($_GET[module]=='testimoni'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module")=='testimoni'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_testimoni/testimoni.php";
   }
 }
 // Bagian User
-elseif ($_GET['module']=='user'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+elseif (Gets::get("module") =='user'){
+  if (Session::get("leveluser") =='admin' OR $_SESSION[leveluser]=='user'){
     include "modul/mod_users/users.php";
   }
 }
 
 // Bagian Modul
-elseif ($_GET['module']=='modul'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='modul'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_modul/modul.php";
   }
 }
 // Bagian Aktialita
-elseif ($_GET['module']=='aktualita'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='aktualita'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_aktualita/aktualita.php";                            
   }
 }
 // Bagian Kategori
-elseif ($_GET['module']=='kategori'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='kategori'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_kategori/kategori.php";
   }
 }
 
 // Bagian Berita
-elseif ($_GET['module']=='berita'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='berita'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_berita/berita.php";                            
   }
 }
 
 // Bagian Komentar Berita
-elseif ($_GET['module']=='komentar'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='komentar'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_komentar/komentar.php";
   }
 }
 
 // Bagian Tag
-elseif ($_GET['module']=='tag'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='tag'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_tag/tag.php";
   }
 }
 
 // Bagian Agenda
-elseif ($_GET['module']=='agenda'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='agenda'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_agenda/agenda.php";
   }
 }
 
 // Bagian Banner
-elseif ($_GET['module']=='banner'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='banner'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_banner/banner.php";
   }
 }
 
 // Bagian Poling
-elseif ($_GET['module']=='poling'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='poling'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_poling/poling.php";
   }
 }
 
 // Bagian Alamat
-elseif ($_GET['module']=='alamat'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='alamat'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_alamat/alamat.php";
   }
 }
 
 // Bagian Download
-elseif ($_GET['module']=='download'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='download'){
+    if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_download/download.php";
   }
 }
 
 // Bagian Hubungi Kami
-elseif ($_GET['module']=='hubungi'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='hubungi'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_hubungi/hubungi.php";
   }
 }
 
 // Bagian Templates
-elseif ($_GET['module']=='templates'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='templates'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_templates/templates.php";
   }
 }
 
 // Bagian Shoutbox
-elseif ($_GET['module']=='shoutbox'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='shoutbox'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_shoutbox/shoutbox.php";
   }
 }
 
 // Bagian Album
-elseif ($_GET['module']=='album'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='album'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_album/album.php";
   }
 }
 
 // Bagian Galeri Foto
-elseif ($_GET['module']=='galerifoto'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='galerifoto'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_galerifoto/galerifoto.php";
   }
 }
 
 // Bagian Kata Jelek
-elseif ($_GET['module']=='katajelek'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='katajelek'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_katajelek/katajelek.php";
   }
 }
 
 // Bagian Sekilas Info
-elseif ($_GET['module']=='sekilasinfo'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='sekilasinfo'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_sekilasinfo/sekilasinfo.php";
   }
 }
 
 // Bagian Menu Utama
-elseif ($_GET['module']=='menu'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='menu'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_menu/menu.php";
   }
 }
 
 
 // Bagian Halaman Statis
-elseif ($_GET['module']=='halamanstatis'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='halamanstatis'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_halamanstatis/halamanstatis.php";
   }
 }
 
 // Bagian Sekilas Info
-elseif ($_GET['module']=='sekilasinfo'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='sekilasinfo'){
+    if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_sekilasinfo/sekilasinfo.php";
   }
 }
 
 
 // Bagian YM
-elseif ($_GET[module]=='ym'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module")=='ym'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_ym/ym.php";
   }
 }
 
 
 // Bagian Logo
-elseif ($_GET[module]=='logo'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module")=='logo'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_logo/logo.php";
   }
 }
@@ -371,52 +394,52 @@ elseif ($_GET[module]=='logo'){
 
 //----------------video------------------>
 // Bagian Playlist
-elseif ($_GET['module']=='playlist'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='playlist'){
+  if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_playlist/playlist.php";
   }
 }
 
 // Bagian Video
-elseif ($_GET['module']=='video'){
-    if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='video'){
+    if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_video/video.php";
   }
 }
 
 // Bagian KomentarVideo 
-elseif ($_GET['module']=='komentarvid'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='komentarvid'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_komentarvid/komentarvid.php";
   }
 }
 
 // Bagian Tag Video
-elseif ($_GET['module']=='tagvid'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='tagvid'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_tagvid/tagvid.php";
   }
 }
 
 // Bagian Identitas Website
-elseif ($_GET['module']=='identitas'){
-   if ($_SESSION['leveluser']=='admin' OR $_SESSION['leveluser']=='user'){
+elseif (Gets::get("module") =='identitas'){
+   if (Session::get("leveluser") =='admin' OR Session::get("leveluser") =='user'){
     include "modul/mod_identitas/identitas.php";
   }
 }
 
 
 // Bagian Daftar Member
-elseif ($_GET['module']=='member'){
-  if ($_SESSION['leveluser']=='admin'){
+elseif (Gets::get("module") =='member'){
+  if (Session::get("leveluser") =='admin'){
     include "modul/mod_member/member.php";
   }
 }
 
   
   // Bagian Background
-  elseif ($_GET[module]=='background'){
-  if ($_SESSION['leveluser']=='admin' OR $_SESSION[leveluser]=='user'){
+  elseif (Gets::get("module")=='background'){
+  if (Session::get("leveluser") =='admin' OR $_SESSION[leveluser]=='user'){
   include "modul/mod_background/background.php";}}   
 
 

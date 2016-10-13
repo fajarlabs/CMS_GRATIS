@@ -1,119 +1,117 @@
 <?php
-session_start();
-if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
-  echo "<link href='style.css' rel='stylesheet' type='text/css'>
- <center>Untuk mengakses modul, Anda harus login <br>";
+include "../../../config/importAll.php";
+
+Session::start();
+
+if (empty(Session::get("username")) AND empty(Session::get("passuser"))){
+  echo "<link href='style.css' rel='stylesheet' type='text/css'><center>Untuk mengakses modul, Anda harus login <br>";
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
-}
-else{
-include "../../../config/koneksi.php";
-include "../../../config/library.php";
-include "../../../config/fungsi_thumb.php";
-include "../../../config/fungsi_seo.php";
+} else {
 
-$module=$_GET[module];
-$act=$_GET[act];
-
-// Hapus halamanstatis
-if ($module=='halamanstatis' AND $act=='hapus'){
-  $data=mysql_fetch_array(mysql_query("SELECT gambar FROM halamanstatis WHERE id_halaman='$_GET[id]'"));
-  if ($data[gambar]!=''){
-     mysql_query("DELETE FROM halamanstatis WHERE id_halaman='$_GET[id]'");
-     unlink("../../../foto_statis/$_GET[namafile]");   
-     unlink("../../../foto_statis/small_$_GET[namafile]");   
-  }
-  else{
-     mysql_query("DELETE FROM halamanstatis WHERE id_halaman='$_GET[id]'");
-  }
-  header('location:../../media.php?module='.$module);
-}
-
-
-// Input halamanstatis
-elseif ($module=='halamanstatis' AND $act=='input'){
-  $lokasi_file    = $_FILES['fupload']['tmp_name'];
-  $tipe_file      = $_FILES['fupload']['type'];
-  $nama_file      = $_FILES['fupload']['name'];
+  $module = Gets::get("module");
+  $act    = Gets::get("act");
+  
+  if ($module=='halamanstatis' AND $act=='hapus'){
+    $id = Gets::get("id");
+    $query = "SELECT gambar FROM halamanstatis WHERE id_halaman = :id";
+    $arrBindParam = array();
+    $arrBindParam[] = Database::content(":id", $id, PDO::PARAM_INT);
+    $oResult = $DB->select($query,$arrBindParam);
+    if($oResult->num_rows > 0) {
+      if ($oResult->result[0]->gambar != '') {
+       $query = "DELETE FROM halamanstatis WHERE id_halaman = :id";
+       $oResult = $DB->delete($query,$arrBindParam);
+       Files::remove("foto_statis/".Gets::get("namafile"));   
+       Files::remove("foto_statis/small_".Gets::get("namafile"));
+     } else {
+       $query = "DELETE FROM halamanstatis WHERE id_halaman = :id";
+       $oResult = $DB->delete($query,$arrBindParam);
+     }
+   }
+   URL::redirect($module);
+ } else if ($module=='halamanstatis' AND $act=='input') {
+  $oFiles = Files::get("fupload");
+  $lokasi_file    = $oFiles->tmp_name;
+  $tipe_file      = $oFiles->type;
+  $nama_file      = $oFiles->name;
   $acak           = rand(1,99);
   $nama_file_unik = $acak.$nama_file; 
 
-  $judul_seo      = seo_title($_POST[judul]);
-
-  // Apabila ada gambar yang diupload
+  /* Apabila ada gambar yang diupload */
   if (!empty($lokasi_file)){
     UploadStatis($nama_file_unik);
 
-   mysql_query("INSERT INTO halamanstatis(judul,
-	                                       judul_seo,
-										   isi_halaman,
-										   tgl_posting,
-										   gambar,
-										   username,
-										     dibaca,
-										      jam,
-											  hari) 
-									VALUES('$_POST[judul]',
-										   '$judul_seo', 
-										   '$_POST[isi_halaman]',
-										   '$tgl_sekarang',
-										   '$nama_file_unik',
-										   '$_SESSION[namauser]',
-										   '$_POST[dibaca]', 
-										     '$jam_sekarang',
-										    '$hari_ini')");
-  header('location:../../media.php?module='.$module);
+    $judul       = Post::get("judul");
+    $isi_halaman = Post::get("isi_halaman");
+    $username    = Session::get("username");
+    $dibaca      = Post::get("dibaca");
+    $query       = "INSERT INTO halamanstatis(judul,judul_seo,isi_halaman,tgl_posting,gambar,username,dibaca,jam,hari) 
+    VALUES(:judul , :judul_seo, :isi_halaman, '$tgl_sekarang', '$nama_file_unik', :username, :dibaca, '$jam_sekarang', '$hari_ini')";
+    $arrBindParam = array();
+    $arrBindParam[] = Database::content(":judul", $judul, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":judul_seo", seo_title($judul), PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":isi_halaman", $isi_halaman, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":username", $username, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":dibaca", $dibaca, PDO::PARAM_INT);
+    $DB->insert($query,$arrBindParam);
+
+    URL::redirect($module);
+  } else {
+    $judul       = Post::get("judul");
+    $isi_halaman = Post::get("isi_halaman");
+    $username    = Session::get("username");
+    $dibaca      = Post::get("dibaca");
+    $query       = "INSERT INTO halamanstatis(judul,judul_seo,isi_halaman,tgl_posting,username,dibaca,jam,hari) 
+    VALUES(:judul , :judul_seo, :isi_halaman, '$tgl_sekarang', :username, :dibaca, '$jam_sekarang', '$hari_ini')";
+    $arrBindParam = array();
+    $arrBindParam[] = Database::content(":judul", $judul, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":judul_seo", seo_title($judul), PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":isi_halaman", $isi_halaman, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":username", $username, PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":dibaca", $dibaca, PDO::PARAM_INT);
+    $DB->insert($query,$arrBindParam);
+
+    URL::redirect($module);
   }
-  else{
-   mysql_query("INSERT INTO halamanstatis(judul,
-	                                       judul_seo,
-										   isi_halaman,
-										   tgl_posting,
-										   username,
-										     dibaca,
-										      jam,
-											  hari) 
-									VALUES('$_POST[judul]',
-										   '$judul_seo', 
-										   '$_POST[isi_halaman]',
-										   '$tgl_sekarang',
-										   '$_SESSION[namauser]',
-										   '$_POST[dibaca]', 
-										     '$jam_sekarang',
-										    '$hari_ini')");
-  header('location:../../media.php?module='.$module);
-  }
-}
-// Update halamanstatis
-elseif ($module=='halamanstatis' AND $act=='update'){
-  $lokasi_file    = $_FILES['fupload']['tmp_name'];
-  $tipe_file      = $_FILES['fupload']['type'];
-  $nama_file      = $_FILES['fupload']['name'];
+} else if ($module=='halamanstatis' AND $act=='update'){
+  $oFiles = Files::get("fupload");
+  $lokasi_file    = $oFiles->tmp_name;
+  $tipe_file      = $oFiles->type;
+  $nama_file      = $oFiles->name;
   $acak           = rand(1,99);
   $nama_file_unik = $acak.$nama_file; 
-  
-  $judul_seo      = seo_title($_POST[judul]);
 
   // Apabila gambar tidak diganti
   if (empty($lokasi_file)){
-    mysql_query("UPDATE halamanstatis SET judul        = '$_POST[judul]',
-                                        judul_seo    = '$judul_seo',
-                                        isi_halaman  = '$_POST[isi_halaman]'  
-                                  WHERE id_halaman   = '$_POST[id]'");
-  header('location:../../media.php?module='.$module);
-  }
-  else{
-   $data_gambar = mysql_query("SELECT gambar FROM halamanstatis WHERE id_halaman='$_POST[id]'");
-	$r    	= mysql_fetch_array($data_gambar);
-	@unlink('../../../foto_statis/'.$r['gambar']);
-	@unlink('../../../foto_statis/'.'small_'.$r['gambar']);
-    UploadStatis($nama_file_unik ,'../../../foto_statis/');
-    mysql_query("UPDATE halamanstatis SET judul        = '$_POST[judul]',
-                                          judul_seo    = '$judul_seo',
-                                          isi_halaman  = '$_POST[isi_halaman]',
-                                          gambar       = '$nama_file_unik'   
-                                    WHERE id_halaman   = '$_POST[id]'");
-    header('location:../../media.php?module='.$module);
-  }
+    $arrBindParam = array();
+    $arrBindParam[] = Database::content(":id", Post::get("id"), PDO::PARAM_INT);
+    $arrBindParam[] = Database::content(":judul", Post::get("judul"), PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":judul_seo", seo_title(Post::get("judul")), PDO::PARAM_STR);
+    $arrBindParam[] = Database::content(":isi_halaman", Post::get("isi_halaman"), PDO::PARAM_STR);
+    $query = "UPDATE halamanstatis SET judul = :judul, judul_seo = :judul_seo, isi_halaman = :isi_halaman WHERE id_halaman = :id";
+    $DB->delete($query,$arrBindParam);
+    URL::redirect($module);
+  } else {
+    $query = "SELECT gambar FROM halamanstatis WHERE id_halaman = :id";
+    $arrBindParam = array();
+    $arrBindParam[] = Database::content(":id", Post::get("id"), PDO::PARAM_INT);
+    $oResult = $DB->select($query,$arrBindParam);
+    if($oResult->num_rows > 0) {
+      echo $gambar = $oResult->result[0]->gambar;
+      Files::remove('foto_statis/'.$gambar);
+      Files::remove('foto_statis/small_'.$gambar);
+      UploadStatis($nama_file_unik ,'../../../foto_statis/'); /* deprecated */
+      $arrBindParam = array();
+      $arrBindParam[] = Database::content(":id", Post::get("id"), PDO::PARAM_INT);
+      $arrBindParam[] = Database::content(":judul", Post::get("judul"), PDO::PARAM_STR);
+      $arrBindParam[] = Database::content(":judul_seo", seo_title(Post::get("judul")), PDO::PARAM_STR);
+      $arrBindParam[] = Database::content(":isi_halaman", Post::get("isi_halaman"), PDO::PARAM_STR);
+      $query = "UPDATE halamanstatis SET judul = :judul , judul_seo = :judul_seo,
+      isi_halaman = :isi_halaman, gambar = '$nama_file_unik' WHERE id_halaman   = :id ";
+      $DB->update($query,$arrBindParam);
+    }
+    URL::redirect($module);
+ }
 }
 }
 ?>
