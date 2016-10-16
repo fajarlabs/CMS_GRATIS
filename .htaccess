@@ -6,6 +6,10 @@ RewriteRule ^index\.html$ media.php?module=beranda [L]
 RewriteRule ^kontak\.html$ media.php?module=kontak [L]
 RewriteRule ^galeri\.html$ media.php?module=galeri [L]
 RewriteRule ^profil\.html$ media.php?module=profil [L]
+RewriteRule ^artikel-(.*)\.html$ media.php?module=artikel&judul_seo=$1 [L]
+RewriteRule ^hal-(.*)\.html$ media.php?module=statis&judul_seo=$1 [L]
+RewriteRule ^cari-artikel\.html$ media.php?module=pencarianartikel [L]
+
 
 
 RewriteRule ^profil-kami\.html$ media.php?module=profilkami&id=$1 [L]

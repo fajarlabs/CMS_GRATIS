@@ -6,16 +6,15 @@ session_start();
   echo "<a href=../../index.php><b>LOGIN</b></a></center>";
 }
 else{
-include "../../../config/koneksi.php";
-include "../../../config/fungsi_thumb.php";
-include "../../../config/fungsi_seo.php";
+include "../../../system/load.php";
 
 $module=$_GET[module];
 $act=$_GET[act];
 
 // Hapus sub menu
 if ($module=='menu' AND $act=='hapus'){
-  mysql_query("DELETE FROM menu WHERE id='$_GET[id]'");
+  echo $query = "DELETE FROM menu WHERE id_menu='$_GET[id]'";
+  mysql_query($query);
   header('location:../../media.php?module='.$module);
 }
 

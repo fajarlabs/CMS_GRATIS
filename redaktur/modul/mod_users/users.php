@@ -109,8 +109,9 @@ echo "";
            <td><center><img src='../foto_user/small_".$val->foto."' width=50></center></td>
            <td align=center><center>".$val->blokir."</center></td>
            
-           <td valign=middle><a href=?module=user&act=edituser&id=".$val->id_session." rel=tooltip-top title='Edit' class='with-tip'>
-           <center><img src='img/edit.png'></center></a> 
+           <td valign=middle>
+           <a href=?module=user&act=edituser&id=".$val->id_session." rel=tooltip-top title='Edit' class='with-tip'><img src='img/edit.png'></a> 
+           <a class='with-tip' href=javascript:confirmdelete('$aksi?module=user&act=hapus&id=".$val->id_session."')>&nbsp;&nbsp;&nbsp;&nbsp;<img src='img/hapus.png' /></a>
            
            </td> </tr> ";
           

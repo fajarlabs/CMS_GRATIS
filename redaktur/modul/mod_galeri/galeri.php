@@ -38,7 +38,7 @@ else{
 $cek=user_akses($_GET[module],$_SESSION[sessid]);
 if($cek==1 OR $_SESSION[leveluser]=='admin'){
 
-$aksi="modul/mod_galerifoto/aksi_galerifoto.php";
+$aksi="modul/mod_galeri/aksi_galeri.php";
 switch($_GET[act]){
 
   // AWAL TAMPIL //////////////////////////
@@ -49,14 +49,14 @@ switch($_GET[act]){
    <div class='container_12'>
    <div class=grid_12> 
    <br/>
-   <a href='?module=galerifoto&act=tambahgalerifoto' class='button'>
-   <span>Tambahkan Galeri Foto</span>
+   <a href='?module=galeri&act=tambahgalerifoto' class='button'>
+   <span>Tambahkan Galeri Foto +</span>
    </a></div>
 
    <div class='grid_12'>
    <div class='block-border'>
    <div class='block-header'>
-   <h1>GALERI FOTO</h1>
+   <h1>DAFTAR GALERI FOTO</h1>
    <span></span> 
    </div>
    <div class='block-content'>		
@@ -85,16 +85,16 @@ switch($_GET[act]){
  
    echo "
    <tr class=gradeX> 
-   <td width=50><center><img src='../img_galeri/kecil_$r[gbr_gallery]' width=50></center></td>
+   <td width=50><center><img width=50 height=30 src='../img_galeri/kecil_$r[gbr_gallery]'></center></td>
    <td>$r[jdl_gallery]</td>
    <td>$r[jdl_album]</td>
 				
    <td width=80>
    
-   <a href=?module=galerifoto&act=editgalerifoto&id=$r[id_gallery] title='Edit' class='with-tip'>
+   <a href=?module=galeri&act=editgalerifoto&id=$r[id_gallery] title='Edit' class='with-tip'>
    <center><img src='img/edit.png'></a>
    
-   <a href=javascript:confirmdelete('$aksi?module=galerifoto&act=hapus&id=$r[id_gallery]&namafile=$r[gbr_gallery]') 
+   <a href=javascript:confirmdelete('$aksi?module=galeri&act=hapus&id=$r[id_gallery]&namafile=$r[gbr_gallery]') 
    title='Hapus' class='with-tip'>
    &nbsp;&nbsp;&nbsp;&nbsp;<img src='img/hapus.png'></center></a> 
 	   
@@ -121,7 +121,7 @@ switch($_GET[act]){
    </div>
    <div class='block-content'>	
 	
-   <form method=POST action='$aksi?module=galerifoto&act=input' enctype='multipart/form-data'>
+   <form method=POST action='$aksi?module=galeri&act=input' enctype='multipart/form-data'>
 
    <p class=inline-small-label> 
    <label for=field4>Judul Foto</label>
@@ -153,7 +153,7 @@ switch($_GET[act]){
    <div class=block-actions> 
    <ul class=actions-right> 
    <li>
-   <a class='button red' id=reset-validate-form href='?module=galerifoto'>Batal</a>
+   <a class='button red' id=reset-validate-form href='?module=galeri'>Batal</a>
    </li> </ul>
    <ul class=actions-left> 
    <li>
@@ -183,7 +183,7 @@ switch($_GET[act]){
    </div>
    <div class='block-content'>
 	
-    <form method=POST enctype='multipart/form-data' action=$aksi?module=galerifoto&act=update>
+    <form method=POST enctype='multipart/form-data' action=$aksi?module=galeri&act=update>
     <input type=hidden name=id value=$r[id_gallery]>
 	
    <p class=inline-small-label> 
@@ -226,7 +226,7 @@ switch($_GET[act]){
       <div class=block-actions> 
       <ul class=actions-right> 
       <li>
-      <a class='button red' id=reset-validate-form href='?module=galerifoto'>Batal</a>
+      <a class='button red' id=reset-validate-form href='?module=galeri'>Batal</a>
       </li> </ul>
       <ul class=actions-left> 
       <li>

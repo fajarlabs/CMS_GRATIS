@@ -1,5 +1,5 @@
 <?php
-include "../../../config/importAll.php";
+include "../../../system/load.php";
 Session::start();
  if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
   echo "<link href='style.css' rel='stylesheet' type='text/css'>
@@ -62,6 +62,22 @@ if ($module=='user' AND $act=='input'){
     }
     URL::redirect($module);
   }
+} else if($module=='user' AND $act=='hapus') {
+  $query = "SELECT foto FROM users WHERE id_session = :id ";
+  $arrBindParam = array();
+  $arrBindParam[] = Database::bind(":id", Gets::get("id"),PDO::PARAM_STR);
+  $oResult = $DB->select($query,$arrBindParam);
+  $foto = isset($oResult->result[0]->foto) ? $oResult->result[0]->foto : "";
+  /* delete foto */
+  Files::remove("foto_user/".$foto);
+  Files::remove("foto_user/".'small_'.$foto);
+
+  $query = "DELETE FROM users WHERE id_session= :id";
+  $arrBindParam = array();
+  $arrBindParam[] = Database::bind(":id",Gets::get("id"),PDO::PARAM_STR);
+  $DB->delete($query,$arrBindParam);
+
+  URL::redirect($module);
 } else if ($module=='user' AND $act=='update') {
   $oFiles = Files::get("fupload");
   $lokasi_file    = $oFiles->tmp_name;
@@ -100,9 +116,9 @@ if ($module=='user' AND $act=='input'){
       $foto = isset($oResult->result[0]->foto) ? $oResult->result[0]->foto : "";
 
       /* delete foto */
-      Files::remove("foto_banner/".$foto);
-      Files::remove("foto_banner/".'small_'.$foto);
-      UploadUser($nama_file_unik ,'../../../foto_banner/');
+      Files::remove("foto_user/".$foto);
+      Files::remove("foto_user/".'small_'.$foto);
+      UploadUser($nama_file_unik ,'../../../foto_user/');
 
       $query = "UPDATE users SET password = '$pass', nama_lengkap = :nama_lengkap, email = :email,  
                 blokir = :blokir, foto = '$nama_file_unik', no_telp = :no_telp WHERE id_session = :id ";
@@ -155,9 +171,9 @@ if ($module=='user' AND $act=='input'){
     $arrBindParam[] = Database::bind(":id", Post::get("id"),PDO::PARAM_STR);
     $oResult = $DB->select($query,$arrBindParam);
     $foto = isset($oResult->result[0]->foto) ? $oResult->result[0]->foto : "";
-    Files::remove("foto_banner/".$foto);
-    Files::remove("foto_banner/small_".$foto);
-    UploadUser($nama_file_unik ,'../../../foto_banner/');
+    Files::remove("foto_user/".$foto);
+    Files::remove("foto_user/small_".$foto);
+    UploadUser($nama_file_unik ,'../../../foto_user/');
 
     $query = "UPDATE users SET password = '$pass', nama_lengkap = :nama_lengkap, email = :email,  
               blokir = :blokir, foto = '$nama_file_unik', no_telp = :no_telp WHERE id_session = :id ";

@@ -19,7 +19,7 @@
                <div class=block-header>
                   <h1>LOGIN ADMINISTRATOR</h1>
                </div>
-               <form id=login-form class="block-content form" action="cekLogin.php" method="post">
+               <form id=login-form class="block-content form" action="aksi_login.php" method="post">
                   <p class=inline-small-label>  
                      <label for="username">Username</label> <input type="text" name="username" value="" class="required" /> 
                   </p>

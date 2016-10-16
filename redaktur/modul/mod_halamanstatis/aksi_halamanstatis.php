@@ -1,5 +1,5 @@
 <?php
-include "../../../config/importAll.php";
+include "../../../system/load.php";
 
 Session::start();
 

@@ -1,4 +1,22 @@
-<?php //error_reporting(0); ?>
+<?php  
+include "../../../system/load.php";
+
+function getSlideAll() {
+	$q = mysql_query("SELECT gambar FROM slider_gambar");
+	$count = mysql_numrows($q);
+	$str = "";
+	while($o = mysql_fetch_object($q)) {
+		$comma = "";
+		if($count > 1) {
+			$comma = ",";
+		}
+		$count--;
+		$str .= '"'.$o->gambar.'"'.$comma;
+	}
+	return $str;
+}
+
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +45,7 @@
 <!-- banner-text Slider starts Here -->
 <script src="<?php echo $f['folder']; ?>/js/responsiveslides.min.js"></script>
 <script>
-	var arrSlide = ["banner-2.jpg","banner-3.jpg","banner-4.jpg","banner-1.jpg"];
+	var arrSlide = [<?php echo getSlideAll(); ?>];
 // You can also use "$(window).load(function() {"
 	$(function () {
 	// Slideshow 3
@@ -40,11 +58,11 @@
 		namespace: "callbacks",
 		before: function () {
 			i++;
-			console.log(i);
+			/*console.log(i);*/
 		},
 		after: function () {
-			console.log(arrSlide[i]);
-			$('.banner').css("background-image","url('http://localhost/fajarlabs/layout/portal/images/"+arrSlide[i]+"')");
+			/*console.log(arrSlide[i]);*/
+			$('.banner').css("background-image","url('http://localhost/img_slider/"+arrSlide[i]+"')");
 			if(i == (arrSlide.length-1)) i = -1; 
 		}
 	});	
@@ -88,7 +106,13 @@
 								<span class="icon-bar"></span>
 							</button>
 							<a style="margin-top:-20px;" class="navbar-brand animated wow fadeInLeft" data-wow-delay=".5s" href="index.html">
-								<image height="80px" src="<?php echo $f['folder']; ?>/images/metro-green.png" />
+							<?php 
+							$q = mysql_query("SELECT gambar FROM logo LIMIT 1 ");
+							if(mysql_numrows($q) > 0) {
+								while($o = mysql_fetch_object($q)) {
+									echo '<image height="80px" src="'.$f['folder'].'/images/'.$o->gambar.'" />';
+								}
+							} ?>
 							</a>
 						</div>
 						<!-- Collect the nav links, forms, and other content for toggling -->
@@ -129,9 +153,9 @@
 						?>
 						</ul>
 
-						<form class="navbar-form navbar-right" action="#" method="post">
+						<form class="navbar-form navbar-right" action="/cari-artikel.html" method="post">
 							<div class="form-group">
-								<input type="text" class="form-control" placeholder="Cari Artikel">
+								<input type="text" name="judul" class="form-control" placeholder="Cari Artikel">
 								<button type="submit" class="btn btn-default" aria-label="Left Align">
 									<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 								</button>
@@ -153,77 +177,40 @@
 	<div class="container">
 		<div class="footer-main">
 		    <div class="col-md-3 ftr-grid animated wow fadeInLeft" data-wow-delay=".5s">
-		    	<h3>Profil</h3>
-		    	<p>[No Data]</p>
+		    	<?php echo getHtml('kode-18'); ?>
 		    </div>
 		    <div class="col-md-3 ftr-grid animated wow fadeInDown animated" data-wow-delay=".5s">
 		    	<h3>Kategori Halaman</h3>
 		    	<ul>
-		    		<li><a href="singlepage.html">Kuliner</a></li>
-		    		<li><a href="singlepage.html">Wisata</a></li>
-		    		<li><a href="singlepage.html">Monumen Sejarah</a></li>
-		    		<li><a href="singlepage.html">Metropolitan</a></li>
+		    		<?php 
+		    		$q = mysql_query("SELECT * FROM kategori LIMIT 5"); 
+		    		while($arr = mysql_fetch_array($q)) {
+		    		echo '<li><a href="#">'.$arr['nama_kategori'].'</a></li>';
+		    		} ?>
+		    		
 		    	</ul>
 		    </div>
 		    <div class="col-md-3 ftr-grid animated wow fadeInUp animated" data-wow-delay=".5s">
 					<h3>Galeri</h3>
+					<?php 
+					$q = mysql_query("SELECT gbr_gallery,jdl_gallery FROM gallery LIMIT 6");
+					while($arr = mysql_fetch_array($q)) {
+						echo '
 					<div class="footer-grd">
-					
-						<a href="singlepage.html">
-						
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
+						<a class="fancybox" data-fancybox-group="gallery" title="'.$arr[1].'" href="/img_galeri/'.$arr[0].'">
+							<img style="width:100px !important; height:70px !important;" src="/img_galeri/'.$arr[0].'" class="img-responsive" alt=" ">
 						</a>
-					</div>
-					<div class="footer-grd">
-						<a href="singlepage.html">
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
-						</a>
-					</div>
-					<div class="footer-grd">
-						<a href="singlepage.html">
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
-						</a>
-					</div>
-					<div class="clearfix"> </div>
-					<div class="footer-grd">
-						<a href="singlepage.html">
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
-						</a>
-					</div>
-					<div class="footer-grd">
-						<a href="singlepage.html">
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
-						</a>
-					</div>
-					<div class="footer-grd">
-						<a href="singlepage.html">
-							<img src="<?php echo $f['folder']; ?>/images/banner-1.jpg" class="img-responsive" alt=" ">
-						</a>
-					</div>
+					</div>';
+					} ?>
+	
 					<div class="clearfix"> </div>
 				</div>
 		    <div class="col-md-3 ftr-grid animated wow fadeInRight" data-wow-delay=".5s">
-		    	<h3>Ikuti Kami</h3>
-		    	<ul>
-		    		<li><a href="#">Facebook</a></li>
-		    		<li><a href="#">Twitter</a></li>
-		    		<li><a href="#">Google +</a></li>
-		    		<li><a href="#">Skype</a></li>
-		    	</ul>
+		    	<?php echo getHtml('kode-16'); ?>
 		    </div>
 			<div class="clearfix"> </div>
 		</div>
-		<div class="copy-right">
-			   <p class="animated wow fadeInRight" data-wow-delay=".5s">© 2016 Web Portal . All rights reserved | Design by  <a href="http://w3layouts.com/" target="_blank">  W3layouts </a></p>
-				<div class="copy-rights animated wow fadeInLeft" data-wow-delay=".5s">
-						<ul>
-							<li><a href="#"><span class="fa"> </span></a></li>
-							<li><a href="#"><span class="tw"> </span></a></li>
-							<li><a href="#"><span class="g"> </span></a></li>
-						</ul>
-						<div class="clearfix"></div>
-				 </div>
-		  </div>
+		<?php echo getHtml('kode-17'); ?>
 	</div>
 </div>
 <!--footer-->

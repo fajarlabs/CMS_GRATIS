@@ -4,34 +4,17 @@
 			<div class="container">
 				<div  id="top" class="callbacks_container">
 					<ul class="rslides" id="slider3">
+						<?php 
+						$q = mysql_query("SELECT * FROM slider_gambar");
+						while($arr = mysql_fetch_array($q)) {
+						?>
 						<li>
 							<div class="banner-text"> 
-								<h2 class="font-satisfy">Bumi Jakarta</h2>
-								<p>Monumen bersejarah di jakarta, visit jakarta</p>
-								<a class="more font-roboto-condensed" href="singlepage.html">Baca selengkapnya</a>
+								<h2 class="font-satisfy"><?php echo $arr['judul']; ?></h2>
+								<?php echo $arr['keterangan']; ?>
 							</div>
 						</li>
-						<li>
-							<div class="banner-text"> 
-								<h2 class="font-satisfy">Ekonomi Jakarta</h2>
-								<p>Melihat kemajuan jakarta dari sisi ekonomi, visit jakarta</p>
-								<a class="more font-roboto-condensed" href="singlepage.html">Baca selengkapnya</a>
-							</div>
-						</li>
-						<li>
-							<div class="banner-text"> 
-								<h2 class="font-satisfy">Wisata Jakarta</h2>
-								<p>Wisata jakarta sebagai referensi liburan anda, visit jakarta</p>
-								<a class="more font-roboto-condensed" href="singlepage.html">Baca selengkapnya</a>
-							</div>
-						</li>
-						<li>
-							<div class="banner-text"> 
-								<h2 class="font-satisfy">Sejarah Kota Jakarta</h2>
-								<p>Kenali jakarta kenali para pejuangnya lanjutkan perjuangannya, visit jakarta</p>
-								<a class="more font-roboto-condensed round" href="singlepage.html">Baca selengkapnya</a>
-							</div>
-						</li>
+						<?php } ?>
 					</ul>	
 				</div>			
 			</div>
@@ -41,36 +24,9 @@
 <!--welcome-->
 	<div class="welcome">
 		<div class="container">
-			<div class="col-md-3 wel-left animated wow fadeInLeft" data-wow-delay=".5s">
-				<image src="<?php echo $f['folder']; ?>/images/target.png" />
-				<h4>VISI</h4>
-				<p>
-				<ol style="text-align: left;">
-				<li>Menjadi Perusahaan Pelayaran yang Tangguh dan Pilihan Utama Pelanggan</li>
-				</ol>
-				</p>
-			</div>
-			<div class="col-md-3 wel-left animated wow fadeInUp animated" data-wow-delay=".5s">
-			<image src="<?php echo $f['folder']; ?>/images/stats.png" />
-				<h4>MISI</h4>
-				<p>
-				<ol style="text-align: left;">
-					<li>Mengelola dan mengembangkan angkutan laut guna menjamin aksesibilitas masyarakat untuk menunjang terwujudnya wawasan nusantara</li>
-					<li>
-Meningkatkan kontribusi pendapatan bagi negara, karyawan
-serta berperan di dalam pembangunan lingkungan dan pelayanan kepada masyarakat</li>
-				</ol>
-				</p>
-				
-			</div>
-			<div class="col-md-6 wel-right animated wow fadeInRight" data-wow-delay=".5s">
-				<div class="wel-tp">
-					<h3 class="font-satisfy">Selamat datang!</h3>
-					<h4><i class="icon-caret-right"></i> Portal berita & galeri masa kini</h4>
-					<p>Indeks berita dan galeri terbaru hari ini dari peristiwa, kecelakaan, kriminal, hukum, berita unik, Politik, dan liputan khusus di Indonesia dan Mancanegara.</p>
-				</div>
-			</div>
-				<div class="clearfix"></div>
+			<?php echo getHtml('kode-13'); ?>
+			<?php echo getHtml('kode-14'); ?>
+			<div class="clearfix"></div>
 		</div>
 	</div>
 <!--//welcome-->
@@ -79,41 +35,21 @@ serta berperan di dalam pembangunan lingkungan dan pelayanan kepada masyarakat</
 		<div class="container">
 			<div class="col-md-4 primary-left animated wow fadeInLeft" data-wow-delay=".5s">
 				<div class="primar-tp">
-					<h3>Kontak Kami</h3>
-					
-					<table>
-						<tr valign="top">
-							<td style="padding-right:5px;" colspan="2">
-								<image height="80px" src="<?php echo $f['folder']; ?>/images/metro-green.png" /><br />
-							</td>
-						</tr>
-						<tr valign="top">
-							<td  style="padding-right:5px;" ><i class="icon-envelope"></i></td>
-							<td>agus@gmail.com</td>
-						</tr>
-						<tr valign="top">
-							<td  style="padding-right:5px;" ><i class="icon-home"></i></td>
-							<td>Jalan Margonda Raya No. 54, Pancoran Mas, Kota Depok, Jawa Barat 16431, Indonesia</td>
-						</tr>
-						<tr valign="top">
-							<td  style="padding-right:5px;" ><i class="icon-phone"></i></td>
-							<td>+62 21 7773610</td>
-						</tr>
-					</table>
+					<?php echo getHtml('kode-1'); ?>
 				</div>
 			</div>
-			<div class="col-md-4 primary-left animated wow fadeInUp animated" data-wow-delay=".5s">
-			<div class="history-grid-image">
-				<img style="height:225px;" src="foto_galeri/lukisan_alam.jpg" class="img-responsive zoom-img" alt="">
-			</div>
-				<h4><i class="icon-caret-right"></i> <a href="">Pameran lukisan alam di Detos</a></h4>
-			</div>
-			<div class="col-md-4 primary-left animated wow fadeInRight" data-wow-delay=".5s">
-				<div class="history-grid-image">
-					<img style="height:225px;" src="foto_galeri/bonsai.jpg" class="img-responsive zoom-img" alt="">
-				</div>
-				<h4><i class="icon-caret-right"><a href=""></i> Pameran bonsai tingkat kecamatan Beji</a></h4>
-			</div>
+			<?php 
+			$q = mysql_query("SELECT * FROM berita WHERE headline = 'Y' LIMIT 2"); 
+			while($arr = mysql_fetch_array($q)) {
+				echo '
+					<div class="col-md-4 primary-left animated wow fadeInUp animated" data-wow-delay=".5s">
+					<div class="history-grid-image">
+						<img style="height:225px;" src="foto_berita/'.$arr['gambar'].'" class="img-responsive zoom-img" alt="">
+					</div>
+						<h4><i class="icon-caret-right"></i> <a href="/artikel-'.$arr['judul_seo'].'.html">'.$arr['judul'].'</a></h4>
+					</div>';
+			} ?>
+
 			<div class="clearfix"></div>
 		</div>
 	</div>
@@ -123,26 +59,18 @@ serta berperan di dalam pembangunan lingkungan dan pelayanan kepada masyarakat</
 	<div class="container">
 		<div class="news-main">
 		
-			 	<h4 class="font-satisfy">Halaman Informasi</h4>
+			 	<h4 class="font-satisfy">Artikel Pilihan</h4>
+			 	 <?php $q = mysql_query("SELECT * FROM berita WHERE utama = 'Y' LIMIT 3"); 
+			 	 while($arr = mysql_fetch_array($q)) {
+			 	 	echo '
+					 	 <div class="col-md-4 news-grid animated wow fadeInLeft" data-wow-delay=".5s">
+					 	 	 <img style="height:225px;" src="foto_berita/'.$arr['gambar'].'" class="img-responsive zoom-img shadow" alt="">
+					 	 	 <label style="padding-top:10px;padding-bottom:10px;font-size:1.3em;color:#f1f1f1;"><i class="icon-angle-right"></i> '.$arr['judul'].'</label>
+					 	 	 <br />
+					 	 	 <a href="/artikel-'.$arr['judul_seo'].'.html" ><i class="icon-caret-right"></i> Baca Selengkapnya</a>
+			 	 		</div>';
+			 	 	} ?>
 
-			 	 <div class="col-md-4 news-grid animated wow fadeInLeft" data-wow-delay=".5s">
-			 	 	 <img style="height:225px;" src="foto_galeri/akik.jpg" class="img-responsive zoom-img shadow" alt="">
-			 	 	 <label style="padding-top:10px;padding-bottom:10px;font-size:1.3em;color:#f1f1f1;"><i class="icon-angle-right"></i> Pameran batu akik di pemkot depok</label>
-			 	 	 <br />
-			 	 	 <a href="singlepage.html" ><i class="icon-caret-right"></i> Baca Selengkapnya</a>
-			 	 </div>
-			     <div class="col-md-4 news-grid animated wow fadeInUp animated" data-wow-delay=".5s">
-			 	 	 <img style="height:225px;" src="foto_galeri/antik.jpg" class="img-responsive zoom-img shadow" alt="">
-			 	 	 <label style="padding-top:10px;padding-bottom:10px;font-size:1.3em;color:#f1f1f1;"><i class="icon-angle-right"></i> Pameran mobil antik di kemang</label>
-			 	 	 <br />
-			 	 	 <a href="singlepage.html" ><i class="icon-caret-right"></i> Baca Selengkapnya</a>
-			 	 </div>
-			 	 <div class="col-md-4 news-grid animated wow fadeInRight" data-wow-delay=".5s">
-			 	 	 <img style="height:225px;" src="foto_galeri/smart.jpg" class="img-responsive zoom-img shadow" alt="">
-			 	 	 <label style="padding-top:10px;padding-bottom:10px;font-size:1.3em;color:#f1f1f1;"><i class="icon-angle-right"></i> Pameran expo smart city</label>
-			 	 	 <br />
-			 	 	 <a href="singlepage.html" ><i class="icon-caret-right"></i> Baca Selengkapnya</a>
-			 	 </div>
 			  <div class="clearfix"> </div>
 			
 			<div class="clearfix"> </div>
@@ -155,33 +83,24 @@ serta berperan di dalam pembangunan lingkungan dan pelayanan kepada masyarakat</
 		<div class="container">
 			<h3 class="font-satisfy">Video Populer</h3>
 			<div class="col-md-5 popular-left animated wow fadeInLeft" data-wow-delay=".5s">
-				<div class="history-grid-image">
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/15eu7ar5EKM" frameborder="0" allowfullscreen></iframe>
-				</div>
+				<?php echo getHtml('kode-15'); ?>
 			</div>
 			<div class="col-md-7 popular-right animated wow fadeInRight" data-wow-delay=".5s">
-				<div class="popular-grids">
-					<div class="col-md-4 popular-text">
-						<img src="foto_galeri/robot1.jpg" class="img-responsive" alt="">
-					</div>
-					<div class="col-md-8 popular-text pplr-right cl-effect-1">
-						<h4>Pameran robot pintar di podomoro mall, jakarta utara</h4>
-						<p> Hari ini telah digelar event robot pintar untuk meramaikan diakhir pekan... </p>
-						<a class="more cl-effect-1" href="singlepage.html">Baca selengkapnya</a>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
-				<div class="popular-grids">
-					<div class="col-md-4 popular-text">
-						<img src="foto_galeri/barang-antik.jpg" class="img-responsive" alt="">
-					</div>
-					<div class="col-md-8 popular-text pplr-right cl-effect-1">
-						<h4>Lelang barang antik di bekasi</h4>
-						<p> Barang-barang antik dan unik di pamerkan dalam event lelang akhir tahun dan menarik wisatawan lokal maupun mancanegara... </p>
-						<a class="more" href="singlepage.html">Baca selengkapnya</a>
-					</div>
-					<div class="clearfix"> </div>
-				</div>
+			 	 <?php $q = mysql_query("SELECT * FROM berita WHERE aktif = 'Y' LIMIT 2"); 
+			 	 while($arr = mysql_fetch_array($q)) {
+			 	 	echo '
+						<div class="popular-grids">
+							<div class="col-md-4 popular-text">
+								<img src="foto_berita/'.$arr['gambar'].'" class="img-responsive" alt="">
+							</div>
+							<div class="col-md-8 popular-text pplr-right cl-effect-1">
+								<h4>'.$arr['judul'].'</h4>
+								<p> '.readMore($arr['isi_berita'],21,"<a class=\"more\" href=\"artikel-".$arr['judul_seo'].".html\">Baca selengkapnya</a>").'</p>
+								
+							</div>
+							<div class="clearfix"> </div>
+						</div>';
+			 	 	} ?>
 			</div>
 			<div class="clearfix"> </div>
 		</div>

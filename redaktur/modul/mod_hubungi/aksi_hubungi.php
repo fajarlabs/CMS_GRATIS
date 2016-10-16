@@ -18,7 +18,7 @@ if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
   </div>";}
   
 else{
-include "../../../config/koneksi.php";
+include "../../../system/load.php";
 
 $module=$_GET[module];
 $act=$_GET[act];

@@ -56,7 +56,7 @@ switch($_GET[act]){
    <div class='grid_12'>
    <div class='block-border'>
    <div class='block-header'>
-   <h1>GALERI BERITA FOTO</h1>
+   <h1>DAFTAR GALERI FOTO</h1>
    <span></span> 
    </div>
    <div class='block-content'>		

@@ -44,7 +44,7 @@ $fckphp_config['urlprefix']=$fckphp_config['prot'].$_SERVER['SERVER_NAME'];
 /*------------------------------------------------------------------------------*/
 /* Path to user files relative to the document root (no trailing slash)		*/
 /*------------------------------------------------------------------------------*/
-$fckphp_config['UserFilesPath'] = "./fajarlabs/redaktur/editor/gambar" ;
+$fckphp_config['UserFilesPath'] = "/editor/gambar" ;
 /*==============================================================================*/
 /* Apabila sudah di-onlinekan, ubah baris 47 dengan settingan seperti berikut:
 $fckphp_config['UserFilesPath'] = "./redaktur/editor/gambar" ; */

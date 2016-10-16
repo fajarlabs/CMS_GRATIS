@@ -1,3 +1,10 @@
+<script>
+function confirmdelete(delUrl) {
+   if (confirm("Anda yakin ingin menghapus?")) {
+      document.location = delUrl;
+   }
+}
+</script>
 <?php
 session_start();
  if (empty($_SESSION['username']) AND empty($_SESSION['passuser'])){
@@ -82,8 +89,10 @@ session_start();
   echo"<td>$r[link]</td>
   <td><center>$r[aktif]</center></td>
   
-  <td width=50><a href=?module=menu&act=editmenu&id=$r[id_menu] rel=tooltip-top title='Edit' class='with-tip'>
-  <center><img src='img/edit.png'></center></a> 
+  <td width=100><center><a href=?module=menu&act=editmenu&id=$r[id_menu] rel=tooltip-top title='Edit' class='with-tip'>
+  <img src='img/edit.png'></a> <a href=javascript:confirmdelete('$aksi?module=menu&act=hapus&id=$r[id_menu]') 
+   title='Hapus' class='with-tip'>
+   &nbsp;&nbsp;&nbsp;&nbsp;<img src='img/hapus.png'></center>
    
   </td></tr>";
   $no++;}

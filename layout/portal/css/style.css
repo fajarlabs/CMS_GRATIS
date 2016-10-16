@@ -32,7 +32,7 @@ body a:hover{
 /*--header--*/
 .header {
     padding: 2px;
-    background-color:#EB9800;
+    background-color:#4C9ED9;
 }
 .header-info p {
     font-size: 1.3em;
@@ -72,7 +72,7 @@ input.form-control {
     outline:0 ! important;
 }
 .navbar-form .form-control {
-    border: 1px solid #EB9800 ! important; 
+    border: 1px solid #4C9ED9 ! important; 
 }
 button.btn.btn-default {
   border: none;
@@ -168,7 +168,7 @@ div#bs-example-navbar-collapse-1 {
 a.more {
     font-size: 1.1em;
     color: #fff;
-    background-color:#eb9800;
+    background-color:#4C9ED9;
     padding: 0.4em 1.5em;
 }
 a.more:hover{
@@ -260,7 +260,7 @@ a.more:hover{
   margin-left: 0;
 }
 .rslides_tabs .rslides_here a {
-  background: #EB9800;
+  background: #4C9ED9;
   color: #fff;
   font-weight: bold;
 }
@@ -473,7 +473,7 @@ span.glyphicon.glyphicon-tree-deciduous, span.glyphicon.glyphicon-grain {
 	color:#ffffff;
 }
 .wel-tp {
-    background-color: #EB9800;
+    background-color: #4C9ED9;
     padding: 2em;
 }
 .wel-right {
@@ -485,7 +485,7 @@ span.glyphicon.glyphicon-tree-deciduous, span.glyphicon.glyphicon-grain {
     padding: 5em 0;
 }
 .primar-tp {
-    background-color: #eb9800;
+    background-color: #4C9ED9;
     padding: 2em;
 }
 .primary h3 {
@@ -557,7 +557,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .news-grid h6 {
     font-size: 1.4em;
-    color: #EB9800;
+    color: #4C9ED9;
     background: #fff;
     padding: 1em 0;
     text-align: center;
@@ -586,7 +586,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .news-grid a:hover{
   
-  background-color: #eb9800;
+  background-color: #4C9ED9;
 }
 /*--news end here--*/
 .popular {
@@ -637,7 +637,7 @@ span.glyphicon.glyphicon-map-marker {
 }
 .ftr-grid h3 {
     font-size: 2em;
-    color:#eb9800;
+    color:#4C9ED9;
     margin: 0 0 1em;
 }
 .ftr-grid p {
@@ -697,7 +697,7 @@ span.glyphicon.glyphicon-map-marker {
   color: #fff;
 }
 .copy-right p a {
-  color:#eb9800;
+  color:#4C9ED9;
 }
 .copy-right p a:hover {
   color: #fff;
@@ -790,7 +790,7 @@ border:none;
   border: none;
 }
 .contact-form input[type="submit"]:hover{
-	background:#eb9800;
+	background:#4C9ED9;
 }
 /*-- //contact --*/
 /*--Typography--*/
@@ -1120,7 +1120,7 @@ h2.typoh2{
   color:#a8b400;
 }
 .about-team  h4 a:hover{
-  color:#eb9800;
+  color:#4C9ED9;
 }
 .about-team p {
   color: #999;
@@ -1188,9 +1188,9 @@ img.zoom-img {
     padding: 2em 1em;
 }
 .services-info:hover {
-    border-bottom: 2px solid #eb9800;
-    border-left: 2px solid #eb9800;
-    border-right: 2px solid #eb9800;
+    border-bottom: 2px solid #4C9ED9;
+    border-left: 2px solid #4C9ED9;
+    border-right: 2px solid #4C9ED9;
     padding: 2em 1em;
 }
 .services-grid {
