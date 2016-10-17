@@ -4,7 +4,7 @@
 			<div>	
 				<?php 
 				$halaman = isset($_GET['halaman']) ? $_GET['halaman'] : 0;
-				$batas  = 12;
+				$batas  = 10;
 				$q = mysql_query("SELECT * FROM gallery ORDER BY id_gallery DESC LIMIT $halaman, $batas");
 				while($arr = mysql_fetch_object($q)) {			
 				echo '<div class="col-md-4 view">
@@ -16,11 +16,11 @@
 				<div class="clearfix"> </div>
 				<center>
 				<?php 
-				    $p      = new PagingGallery;
+				    $p      = new PagingGlobal;
     				$posisi = $p->cariPosisi($batas);
     				$jmldata = mysql_num_rows(mysql_query("SELECT * FROM gallery"));
     				$jmlhalaman  = $p->jumlahHalaman($jmldata, $batas);
-    				echo $linkHalaman = $p->navHalaman($_GET[halaman], $jmlhalaman);
+    				echo $linkHalaman = $p->navHalaman($_GET[halaman], $jmlhalaman,"galeri");
     			?>
 				</center>
 			</div>				

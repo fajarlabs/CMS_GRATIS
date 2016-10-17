@@ -59,6 +59,7 @@ else {
 		   <thead><tr>	
 		   	<th>Judul</th>
 		   <th>Kode HTML (copy dan paste di template file php )</th>
+		   <th>Kode HTML (copy dan paste di halaman statis )</th>
 		   
 		   <th>Aksi</th>
 		   
@@ -73,7 +74,7 @@ else {
 		   <tr class=gradeX> 
 		   <td>$r[judul]</td>
 		   <td><span style='font-weight:bold;color:green;'>".htmlentities('<?php echo getHtml(\''.$r['kode'].'\'); ?>')."</span></td>
-		   
+		   <td><span style='font-weight:bold;color:green;'>".htmlentities('<codehtml data="'.$r['kode'].'" ></codehtml>')."</span></td>
 						
 		   <td width=80>
 		   

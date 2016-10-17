@@ -1,6 +1,7 @@
 <?php
 // ADMINISTARTIOR /////////////////////////////////////////////////////////////////////////////////
-class PagingGallery{
+
+class PagingGlobal{
 // Fungsi untuk mencek halaman dan posisi data
 function cariPosisi($batas){
 	if(empty($_GET['halaman'])){
@@ -19,14 +20,14 @@ function jumlahHalaman($jmldata, $batas){
 }
 
 // Fungsi untuk link halaman 1,2,3 (untuk admin)
-function navHalaman($halaman_aktif, $jmlhalaman){
+function navHalaman($halaman_aktif, $jmlhalaman,$strPrev){
 	$link_halaman = "";
 
 	// Link ke halaman pertama (first) dan sebelumnya (prev)
 	if($halaman_aktif > 1){
 		$prev = $halaman_aktif-1;
-		$link_halaman .= "<a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=1 >Awal</a> 
-	                    <a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$prev >Kembali</a>";
+		$link_halaman .= "<a  class='btn btn-primary btn-sm' href=/$strPrev-1.html >Awal</a> 
+	                    <a  class='btn btn-primary btn-sm' href=/$strPrev-$prev.html >Kembali</a>";
 	} else
 		$link_halaman .=  "<span >Awal</span>&nbsp;<span >Kembali</span>";
 
@@ -35,24 +36,24 @@ function navHalaman($halaman_aktif, $jmlhalaman){
 	for ($i=$halaman_aktif-2; $i<$halaman_aktif; $i++){
 	  if ($i < 1)
 	  	continue;
-		  $angka .= "<a class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$i>$i</a> ";
+		  $angka .= "<a class='btn btn-primary btn-sm' href=/$strPrev-$i.html>$i</a> ";
 	  }
 		  $angka .= " <span class='current'><b>$halaman_aktif</b></span> ";
 		  
 	    for($i=$halaman_aktif+1; $i<($halaman_aktif+3); $i++){
 	    if($i > $jmlhalaman)
 	      break;
-		  $angka .= "<a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$i>$i</a> ";
+		  $angka .= "<a  class='btn btn-primary btn-sm' href=/$strPrev-$i.html>$i</a> ";
 	    }
-		  $angka .= ($halaman_aktif+2<$jmlhalaman ? "  <span >...</span><a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$jmlhalaman>$jmlhalaman</a>" : " ");
+		  $angka .= ($halaman_aktif+2<$jmlhalaman ? "  <span >...</span><a  class='btn btn-primary btn-sm' href=/$strPrev-$jmlhalaman.html>$jmlhalaman</a>" : " ");
 
 	$link_halaman .= "$angka";
 
 	// Link ke halaman berikutnya (Lanjut) dan terakhir (Akhir) 
 	if($halaman_aktif < $jmlhalaman){
 		$next = $halaman_aktif+1;
-		$link_halaman .= " <a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$next >Lanjut</a> 
-	                     <a  class='btn btn-primary btn-sm' href=$_SERVER[PHP_SELF]?module=$_GET[module]&halaman=$jmlhalaman >Akhir</a> ";
+		$link_halaman .= " <a  class='btn btn-primary btn-sm' href=/$strPrev-$next.html >Lanjut</a> 
+	                     <a  class='btn btn-primary btn-sm' href=/$strPrev-$jmlhalaman.html >Akhir</a> ";
 	} else {
 		$link_halaman .= "<span >Lanjut</span>
 		<span >Akhir</span>";

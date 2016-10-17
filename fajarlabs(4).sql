@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 16, 2016 at 05:13 PM
+-- Generation Time: Oct 16, 2016 at 09:14 PM
 -- Server version: 10.1.9-MariaDB
 -- PHP Version: 5.5.30
 
@@ -485,11 +485,12 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id_menu`, `id_parent`, `nama_menu`, `link`, `aktif`, `aktif_pertama`) VALUES
-(44, 0, '<i class="icon-wpform"></i> Kontak', 'kontak.html', 'Ya', 0),
+(44, 0, '<i class="fa fa-wpforms" aria-hidden="true"></i> Kontak', 'kontak.html', 'Ya', 0),
 (43, 0, '<i class="icon-folder-open"></i> Galeri', '#', 'Ya', 0),
 (42, 0, '<i class="icon-user"></i> Profil', 'hal-profile.html', 'Ya', 0),
 (41, 0, '<i class="icon-home"></i> Beranda', 'index.html', 'Ya', 1),
-(46, 43, 'Semua Galeri', 'galeri.html', 'Ya', 0);
+(46, 43, 'Semua Galeri', 'galeri.html', 'Ya', 0),
+(49, 0, 'Semua Artikel', 'semua-artikel.html', 'Ya', 0);
 
 -- --------------------------------------------------------
 
@@ -518,29 +519,18 @@ CREATE TABLE `modul` (
 INSERT INTO `modul` (`id_modul`, `nama_modul`, `username`, `link`, `static_content`, `gambar`, `publish`, `status`, `aktif`, `urutan`, `link_seo`) VALUES
 (2, 'Manajemen User', '', '?module=user', '', '', 'N', 'admin', 'N', 22, ''),
 (18, ' Berita', '', '?module=berita', '', '', 'Y', 'user', 'Y', 5, 'semua-berita.html'),
-(19, 'Iklan Utama', '', '?module=banner', '', '', 'N', 'user', 'N', 9, ''),
 (10, 'Manajemen Modul', '', '?module=modul', '', '', 'N', 'admin', 'N', 23, ''),
 (31, 'Kategori Berita ', '', '?module=kategori', '', '', 'Y', 'user', 'Y', 6, ''),
-(33, 'Jajak Pendapat', '', '?module=poling', '', '', 'N', 'admin', 'N', 18, ''),
-(34, 'Tag Berita', '', '?module=tag', '', '', 'Y', 'user', 'Y', 7, ''),
-(35, 'Komentar Berita', '', '?module=komentar', '', '', 'Y', 'user', 'Y', 8, ''),
-(41, 'Agenda Jakarta', '', '?module=agenda', '', '', 'N', 'admin', 'N', 17, 'semua-agenda.html'),
+(73, 'Slider Gambar', '', '?module=slidergambar', '', '', 'Y', 'admin', 'Y', 0, ''),
+(74, 'Slider Gambar', '', '?module=slidergambar', '', '', 'Y', 'admin', 'Y', 27, ''),
 (43, 'Berita Foto', '', '?module=album', '', '', 'Y', 'user', 'Y', 11, ''),
-(44, 'Galeri Berita Foto', '', '?module=galerifoto', '', '', 'Y', 'user', 'Y', 12, ''),
+(44, 'Galeri Foto', '', '?module=galeri', '', '', 'Y', 'user', 'Y', 12, ''),
 (45, 'Template Web', '', '?module=templates', '', '', 'Y', 'user', 'Y', 16, ''),
-(46, 'Sensor Kata', '', '?module=katajelek', '', '', 'Y', 'user', 'Y', 10, ''),
 (61, 'Identitas Website', '', '?module=identitas', '', '', 'Y', 'user', 'Y', 1, ''),
 (57, 'Menu Utama', '', '?module=menuutama', '', '', 'Y', 'user', 'Y', 2, ''),
-(58, 'Sub Menu', '', '?module=submenu', '', '', 'Y', 'user', 'Y', 3, ''),
 (59, 'Halaman Baru', '', '?module=halamanstatis', '', '', 'Y', 'user', 'Y', 4, ''),
-(62, 'Video', '', '?module=video', '', '', 'Y', 'user', 'Y', 13, ''),
-(63, 'Playlist Video', '', '?module=playlist', '', '', 'N', 'admin', 'N', 14, ''),
-(64, 'Tag Video', '', '?module=tagvid', '', '', 'Y', 'user', 'Y', 15, ''),
-(65, 'Komentar Video', '', '?module=komentarvid', '', '', 'N', 'admin', 'N', 15, ''),
 (66, 'Logo Website', '', '?module=logo', '', '', 'Y', 'user', 'Y', 15, ''),
-(67, 'Iklan Layanan', '', '?module=iklanatas', '', '', 'N', 'admin', 'N', 19, ''),
-(68, 'Iklan Depan', '', '?module=iklantengah', '', '', 'N', 'admin', 'N', 20, ''),
-(69, 'Iklan Kiri', '', '?module=pasangiklan', '', '', 'N', 'admin', 'N', 21, ''),
+(75, 'Kode HTML', '', '?module=kodehtml', '', '', 'Y', 'admin', 'Y', 28, ''),
 (70, 'Hubungi Kami', '', '?module=hubungi', '', '', 'Y', 'user', 'Y', 24, ''),
 (71, 'Artikel Website', 'admin', '?module=artikel', '', '', 'Y', 'admin', 'Y', 25, ''),
 (72, 'Kategori Artikel', 'admin', '?module=kategori_artikel', '', '', 'Y', 'admin', 'Y', 26, '');
@@ -718,7 +708,8 @@ INSERT INTO `statistik` (`ip`, `tanggal`, `hits`, `online`) VALUES
 ('::1', '2016-10-12', 1, '1476278931'),
 ('::1', '2016-10-13', 2, '1476376228'),
 ('::1', '2016-10-14', 1, '1476415214'),
-('::1', '2016-10-15', 14, '1476541920');
+('::1', '2016-10-15', 14, '1476541920'),
+('::1', '2016-10-17', 6, '1476642989');
 
 -- --------------------------------------------------------
 
@@ -1198,12 +1189,12 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `id_menu` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 --
 -- AUTO_INCREMENT for table `modul`
 --
 ALTER TABLE `modul`
-  MODIFY `id_modul` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
+  MODIFY `id_modul` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT for table `mod_alamat`
 --
@@ -1238,7 +1229,7 @@ ALTER TABLE `sekilasinfo`
 -- AUTO_INCREMENT for table `slider_gambar`
 --
 ALTER TABLE `slider_gambar`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tag`
 --

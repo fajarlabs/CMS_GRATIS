@@ -95,7 +95,7 @@
 							</div>
 							<div class="col-md-8 popular-text pplr-right cl-effect-1">
 								<h4>'.$arr['judul'].'</h4>
-								<p> '.readMore($arr['isi_berita'],21,"<a class=\"more\" href=\"artikel-".$arr['judul_seo'].".html\">Baca selengkapnya</a>").'</p>
+								<p> '.readMore($arr['isi_berita'],21,"... <a href=\"artikel-".$arr['judul_seo'].".html\">Baca selengkapnya</a>").'</p>
 								
 							</div>
 							<div class="clearfix"> </div>

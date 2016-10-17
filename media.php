@@ -22,7 +22,8 @@
     return $r[0];
   }
 
-  function readMore($str,$length=20,$href="<a class=\"more\" href=\"singlepage.html\">Baca selengkapnya</a>") {
+
+  function readMore($str,$length=20,$href="") {
     $string = strip_tags($str);
     $explod = explode(" ",$string);
     $strReadMore = "";
@@ -30,7 +31,7 @@
       for($i = 0; $i < $length; $i++) {
         $strReadMore .=$explod[$i]." ";
       }
-      $strReadMore = $strReadMore. "....<br />".$href;
+      $strReadMore = $strReadMore.$href;
     } else {
       for($i = 0; $i < $length; $i++) {
         $strReadMore .=$explod[$i]." ";

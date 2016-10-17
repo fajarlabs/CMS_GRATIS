@@ -28,21 +28,13 @@
  
    <ul class='shortcut-list'>
   
-   <li><a href=media.php?module=menu><img src='img/modul.png'/>Menu</a></li>
    <li><a href=media.php?module=berita><img src='img/berita.png'/>Berita</a></li>
    <li><a href=media.php?module=templates><img src='img/template.png'/>Template</a></li>
-   <li><a href=media.php?module=agenda><img src='img/agenda.png'/>Agenda</a></li>
    <li><a href=media.php?module=album><img src='img/album.png'/>Album Foto</a></li>
-   <li><a href=media.php?module=galerifoto><img src='img/foto.png'/>Galeri Foto</a></li>
-   <li><a href=media.php?module=poling><img src='img/poling.png'/>Jajak Pendapat</a></li>
+   <li><a href=media.php?module=galeri><img src='img/foto.png'/>Galeri Foto</a></li>
    <li><a href=media.php?module=logo><img src='img/gantilogo.png'/>Logo Website</a></li>
    <li><a href=media.php?module=user><img src='img/user.png'/>User Admin</a></li>
-   <li><a href=media.php?module=video><img src='img/video.png'/>Video</a></li>
-   <li><a href=media.php?module=iklantengah><img src='img/iklan1.png'/>Iklan Home</a></li>
-   <li><a href=media.php?module=pasangiklan><img src='img/iklan2.png'/>Iklan Sidebar</a></li>
-   <li><a href=media.php?module=iklanatas><img src='img/iklan3.png'/>Iklan Layanan</a></li>
    <li><a href=media.php?module=hubungi><img src='img/kontak.png'/>Pesan Masuk</a></li>
-   <li><a href=media.php?module=komentar><img src='img/komentar.png'/>Komentar</a></li>
    <li><a href=media.php?module=modul><img src='img/module.png'/>Modul Web</a></li>
 
    </ul>

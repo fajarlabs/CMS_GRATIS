@@ -24,7 +24,7 @@ function getSlideAll() {
 <link href="<?php echo $f['folder']; ?>/css/bootstrap.css" type="text/css" rel="stylesheet" media="all">
 <link href="<?php echo $f['folder']; ?>/css/style.css" type="text/css" rel="stylesheet" media="all">
 <link rel="stylesheet" href="<?php echo $f['folder']; ?>/css/lightbox.css">
-<link rel="stylesheet" href="<?php echo $f['folder']; ?>/plugins/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="<?php echo $f['folder']; ?>/plugins/font-awesome-4.6.3/css/font-awesome.css">
 
 <!-- fonts -->
 <link href="https://fonts.googleapis.com/css?family=Lobster|Roboto+Condensed|Satisfy" rel="stylesheet"> 

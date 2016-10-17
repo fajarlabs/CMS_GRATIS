@@ -24,4 +24,9 @@ include "$f[folder]/modul/mod_artikel/artikel.php";}
 elseif ($_GET['module']=='statis'){
 include "$f[folder]/modul/mod_statis/statis.php";}
 /////////////////////////////////////////////////////////////////////
+
+// DETAIL SEMUA ARTIKEL ////////////////////////////////////////////
+elseif ($_GET['module']=='semuaartikel'){
+include "$f[folder]/modul/mod_semuaartikel/semuaartikel.php";}
+/////////////////////////////////////////////////////////////////////
 ?>
