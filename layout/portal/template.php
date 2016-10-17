@@ -110,7 +110,7 @@ function getSlideAll() {
 							$q = mysql_query("SELECT gambar FROM logo LIMIT 1 ");
 							if(mysql_numrows($q) > 0) {
 								while($o = mysql_fetch_object($q)) {
-									echo '<image height="80px" src="'.$f['folder'].'/images/'.$o->gambar.'" />';
+									echo '<image height="80px" src="/logo/'.$o->gambar.'" />';
 								}
 							} ?>
 							</a>

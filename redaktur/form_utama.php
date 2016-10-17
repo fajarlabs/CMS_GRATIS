@@ -161,7 +161,7 @@
   <ul class="menu collapsible shadow-bottom">
 
   <li>
-  <?php if((cekMenu(array("identitas","menu","halamanstatis")) > 0)) { ?>
+  <?php if((cekMenu(array("artikel","kategori_artikel")) > 0)) { ?>
   <a href="javascript:void(0);">MODUL ARTIKEL</a> 
   <ul class="sub">
   <?php include "menu_artikel.php"; ?>
