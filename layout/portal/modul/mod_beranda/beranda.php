@@ -5,7 +5,7 @@
 				<div  id="top" class="callbacks_container">
 					<ul class="rslides" id="slider3">
 						<?php 
-						$q = mysql_query("SELECT * FROM slider_gambar");
+						$q = mysql_query("SELECT * FROM slider_gambar ORDER BY id DESC");
 						while($arr = mysql_fetch_array($q)) {
 						?>
 						<li>

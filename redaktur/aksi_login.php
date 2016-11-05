@@ -39,12 +39,12 @@ else {
    Atau akun anda sedang diblokir.</p></span><br/>
    
    </section>
-   
    <section id='error-text'>
    <p><a class='button' href='index.php'>&nbsp;&nbsp; <b>ULANGI LAGI</b> &nbsp;&nbsp;</a></p>
    </section>
    </div>";
+}
+}
 
-}
-}
+mysql_query()
 ?>

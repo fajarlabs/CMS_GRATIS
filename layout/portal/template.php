@@ -2,7 +2,7 @@
 include "../../../system/load.php";
 
 function getSlideAll() {
-	$q = mysql_query("SELECT gambar FROM slider_gambar");
+	$q = mysql_query("SELECT gambar FROM slider_gambar ORDER BY id DESC");
 	$count = mysql_numrows($q);
 	$str = "";
 	while($o = mysql_fetch_object($q)) {
@@ -49,7 +49,8 @@ function getSlideAll() {
 // You can also use "$(window).load(function() {"
 	$(function () {
 	// Slideshow 3
-		var i = -1;
+		var i = 0;
+		$('.banner').css("background-image","url('http://localhost/img_slider/"+arrSlide[i]+"')");
 		$("#slider3").responsiveSlides({
 		auto: true,
 		pager:true,
@@ -58,12 +59,12 @@ function getSlideAll() {
 		namespace: "callbacks",
 		before: function () {
 			i++;
-			/*console.log(i);*/
+			$('.banner').css("background-image","url('http://localhost/img_slider/"+arrSlide[i]+"')");
+			
+			if(i == (arrSlide.length-1)) i = -1; 
 		},
 		after: function () {
-			/*console.log(arrSlide[i]);*/
-			$('.banner').css("background-image","url('http://localhost/img_slider/"+arrSlide[i]+"')");
-			if(i == (arrSlide.length-1)) i = -1; 
+
 		}
 	});	
 });
